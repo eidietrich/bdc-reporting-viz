@@ -1,0 +1,214 @@
+.hide{
+  display: none;
+}
+
+
+body {
+  max-width: 900px;
+  margin: auto;
+}
+
+.viz-container {
+  border: 1px solid #bbb;
+  height: 300px;
+}
+.viz-tooltip {
+  position: absolute;
+
+  font-size: 11px;
+
+  padding: 3px;
+
+  max-width: 140px;
+
+  border: 1px solid #bbb;
+  background-color: #fff;
+  opacity: 1;
+}
+
+@media (max-width: 768px){
+  .viz-tooltip{
+    display: none;
+  }
+}
+
+
+.thumbnail-container {
+  border: 1px solid #bbb;
+  background-color: #fff;
+
+}
+
+
+
+.tease-container {
+  border: 1px solid #bbb;
+  background-color: #fff;
+
+  /* Mobile display stuff*/
+  width: 100%;
+  height: auto;
+
+  position: relative;
+  /*bottom: 0px;
+  left: 0px;*/
+
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+
+}
+.tease-header {
+  width: 100%;
+  height: auto;
+  background-color: #fff;
+  border-bottom: 1px solid #bbb;
+  position: sticky;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: center;
+
+  left: 0;
+}
+.tease-header a {
+  cursor: pointer;
+}
+.story-teases {
+  /*position: relative;*/
+}
+
+.story-tease {
+  border-left: 1px solid #bbb;
+  background-color: #fff;
+
+  /* Mobile display stuff */
+  display: inline-block;
+  vertical-align: top;
+  white-space: normal;
+
+  padding-left: 5px;
+  padding-right: 5px;
+
+  width: 200px;
+  height: 160px;
+}
+.story-tease:first-child{
+  border-left: none;
+}
+.story-tease.highlight {
+  background: #eee;
+}
+
+.thumbnail img {
+  display: none;
+}
+
+/* For desktop */
+@media (min-width: 768px){
+  .viz-container {
+    float: left;
+    width: 60%;
+    height: 500px;
+  }
+  .tease-container {
+    /*position: static;*/
+    float: right;
+    width: 39%;
+    height: 500px;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+    white-space: normal;
+
+  }
+  .tease-header {
+    top: 0;
+  }
+  .story-teases {
+    position: relative;
+  }
+  .story-tease {
+    width: auto;
+    height: auto;
+
+    padding: 0;
+    margin-left: 10px;
+    margin-right: 10px;
+
+    border-style: none;
+    border-bottom: 1px solid #bbb;
+  }
+/*  .story-image {
+    display: inline;
+    float: left;
+
+    width: 100px;
+    height: 100px;
+  }*/
+}
+
+/* Story teases */
+
+
+.axis-label {
+  font-size: 10px;
+  /*font-style: italic;*/
+}
+
+.grid-line line {
+  stroke: #bbb;
+}
+
+.tooltip-container {
+  /*height: auto;*/
+  /*width: 40%;*/
+
+}
+
+.tooltip-container.hide {
+  display: none;
+}
+
+.marker {
+  opacity: 1.0;
+  cursor: pointer;
+  /*stroke: #eee;*/
+  /*stroke-width: 1;*/
+}
+
+.marker:hover,
+.marker.highlight {
+  stroke: black;
+  stroke-width: 2;
+  opacity: 1;
+}
+
+.marker.fadeout {
+  opacity: 0.2;
+}
+
+.marker.prime-highlight {
+  stroke: black;
+  stroke-width: 4;
+}
+
+.story-thread {
+  stroke: #000;
+  stroke-width: 3;
+  fill: none;
+}
+
+/* Article icons */
+
+.article-icon {
+  // background-image: url('./../images/article.svg');
+  background-size: contain;
+  width: 100px;
+  height: 100px;
+}
+
+.dropdown-menu {
+  height: auto;
+  max-height: 200px;
+  overflow-x: hidden;
+}
