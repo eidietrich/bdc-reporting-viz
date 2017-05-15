@@ -1,7 +1,20 @@
 import React from 'react';
+import { line, curveMonotoneY } from 'd3';
+
+// Line generator
+var curve = line()
+    .x(function(d){ return d.x; })
+    .y(function(d){ return d.y; })
+    .curve(curveMonotoneY);
+
 function Connectors(props){
-  // TODO
-  return (<g className="connector-container"></g>);
+  if (props.stories === null) return null;
+
+  const path = curve(props.stories);
+
+  return (<g className="connector-container">
+      <path d={path} className='story-thread'/>
+    </g>);
 }
 
 export default Connectors;

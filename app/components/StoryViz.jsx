@@ -68,31 +68,33 @@ class StoryViz extends React.Component {
     const plotTranslate = `translate(${this.margin.left},${this.margin.top})`;
 
     const stories = this.layout(this.props.stories);
-
     return (
       <g className="plot"
         transform={plotTranslate}>
         <Grid scale={this.dateScale} height={this.plotHeight}/>
-        <Connectors />
-        <Markers stories={stories} />
+        <Connectors stories={this.props.threadStories}/>
+        <Markers
+          stories={stories}
+          focusOn={this.props.focusOn}
+          focusStory={this.props.focusStory}
+          focusThread={this.props.focusThread}
 
+          handleMarkerClick={this.props.handleStorySelect}
+        />
       </g>
     )
   }
+
 
   layout(stories){
     const that = this;
     // add stories.x, stories.y
 
-    // Group by month
-    stories.sort(function(a,b){
-      return a.date - b.date;
-    });
-
     const spacing = 2.5; // px
     let heightCounter = {}
 
     stories.forEach((d) => {
+      d.markerWidth = this.markerWidth;
       d.month = timeMonth(d.date);
       d.x = this.dateScale(d.month);
       var key = timeFormat('%-b%-Y')(d.month);

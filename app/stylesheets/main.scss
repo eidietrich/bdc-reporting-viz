@@ -171,25 +171,30 @@ body {
 
 .marker {
   opacity: 1.0;
-  cursor: pointer;
-  /*stroke: #eee;*/
-  /*stroke-width: 1;*/
-}
-
-.marker:hover,
-.marker.highlight {
-  stroke: black;
-  stroke-width: 2;
-  opacity: 1;
+  // cursor: pointer;
+  stroke: #666;
+  stroke-width: 1;
 }
 
 .marker.fadeout {
   opacity: 0.2;
 }
 
+.marker.highlight {
+  stroke: black;
+  stroke-width: 2;
+  opacity: 1;
+}
+
+.marker:hover{
+  stroke: black;
+  stroke-width: 2;
+}
+
 .marker.prime-highlight {
   stroke: black;
-  stroke-width: 4;
+  stroke-width: 3;
+  opacity: 1;
 }
 
 .story-thread {
@@ -211,4 +216,5 @@ body {
   height: auto;
   max-height: 200px;
   overflow-x: hidden;
+  // display: block;
 }
