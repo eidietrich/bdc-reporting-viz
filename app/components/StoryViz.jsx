@@ -1,11 +1,29 @@
 import React, { Component } from 'react';
 import ContainerDimensions from 'react-container-dimensions';
+
 import {scaleTime, scaleLinear, timeMonths, timeMonth,
   timeFormat, dateScale, axisTop, axisBottom, max} from 'd3';
 
+import Tooltip from './Tooltip.jsx';
 import Grid from './Grid.jsx';
 import Connectors from './Connectors.jsx';
 import Markers from './Markers.jsx';
+
+/* Interactivity behavior
+
+Three key aspects of state (passed down from App):
+- in focus mode (props.focusMode, true/false)
+  - false: no fade, tooltip on hover any story
+  - true: fade all stories except focus thread, tooltip render on focus story, change focus story on hover/click
+- focus story -
+  - focus mode false - NA
+  - focus mode true - attach tooltip, highlight in teaseContainer
+- focus thread - string together stories if non-null
+  - focus mode false - NA
+  - focus mode true - string together stories if non-null
+
+
+*/
 
 class StoryViz extends React.Component {
   constructor(props){
@@ -14,23 +32,28 @@ class StoryViz extends React.Component {
       top: 50, left: 20,
       bottom: 50, right: 30
     };
+
     this.startDate = new Date('Jun 1, 2015');
     this.endDate = new Date('May 31, 2017');
     this.dateScale = scaleTime()
-      .domain([this.startDate, this.endDate])
+      .domain([this.startDate, this.endDate]);
   }
 
   render(){
     // console.log(this.props.stories);
 
+    const renderWithDims = ({width, height}) => {
+      this.setDimensions(width, height);
+      this.stories = this.layout(this.props.stories);
+      const svg = this.buildSvg();
+      const tooltip = this.buildTooltip();
+      return <div>{svg}{tooltip}</div>;
+    }
+
     return (
-      <div className='viz-container'>
+      <div className='viz-container' >
         <ContainerDimensions>
-          { ({ width, height }) => {
-              this.setDimensions(width, height);
-              return this.buildSvg();
-            }
-          }
+          {renderWithDims}
         </ContainerDimensions>
       </div>
     )
@@ -38,6 +61,7 @@ class StoryViz extends React.Component {
 
   setDimensions(width, height){
     // console.log('dims', width, height);
+
     this.width = width;
     this.height = height;
     this.plotWidth = this.width - this.margin.left - this.margin.right;
@@ -53,38 +77,40 @@ class StoryViz extends React.Component {
 
   }
 
+  buildTooltip(){
+    const tipStory = this.props.tooltipStory;
+    const tooltip = !tipStory ? null : (
+      <Tooltip
+        x={tipStory.x + this.markerWidth / 2 + this.margin.left}
+        y={tipStory.y + this.margin.top}
+        data={tipStory}
+      />
+    );
+    return tooltip;
+  }
+
   buildSvg(){
+    const plotTranslate = `translate(${this.margin.left},${this.margin.top})`;
     const svg = (
-      <svg width={this.width}
-        height={this.height}>
-      {this.draw()}
+      <svg width={this.width} height={this.height} >
+        <g className="plot" transform={plotTranslate}>
+          <Grid scale={this.dateScale} height={this.plotHeight}/>
+          <Connectors stories={this.props.threadStories}/>
+          <Markers
+            stories={this.stories}
+            focusMode={this.props.focusMode}
+            focusStoryKey={this.props.focusStoryKey}
+            focusThread={this.props.focusThread}
+
+            handleMarkerClick={this.props.handleMarkerClick}
+            handleMouseEnter={this.props.handleMouseEnter}
+            handleMouseLeave={this.props.handleMouseLeave}
+          />
+        </g>
       </svg>
     )
     return svg;
   }
-
-  draw(){
-    // assumes setDims has been called higher in stack
-    const plotTranslate = `translate(${this.margin.left},${this.margin.top})`;
-
-    const stories = this.layout(this.props.stories);
-    return (
-      <g className="plot"
-        transform={plotTranslate}>
-        <Grid scale={this.dateScale} height={this.plotHeight}/>
-        <Connectors stories={this.props.threadStories}/>
-        <Markers
-          stories={stories}
-          focusOn={this.props.focusOn}
-          focusStory={this.props.focusStory}
-          focusThread={this.props.focusThread}
-
-          handleMarkerClick={this.props.handleStorySelect}
-        />
-      </g>
-    )
-  }
-
 
   layout(stories){
     const that = this;

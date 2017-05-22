@@ -7,13 +7,15 @@ class Markers extends React.Component {
     const markers = this.props.stories.map((d) => {
       const markerTranslate = `translate(${d.x},${d.y})`;
       const isHighlight = (d.story_thread === this.props.focusThread);
-      const isPrime = (d.key === this.props.focusStory);
-      const isFade = this.props.focusOn && !isHighlight && !isPrime;
+      const isPrime = (d.key === this.props.focusStoryKey);
+      const isFade = this.props.focusMode && !isHighlight && !isPrime;
       return (
         <g className='marker-group'
         transform={markerTranslate}
         key={d.key}
         onClick={(e) => {this.props.handleMarkerClick(d)}}
+        onMouseEnter={(e) => {this.props.handleMouseEnter(d)}}
+        onMouseLeave={(e) => {this.props.handleMouseLeave()}}
         >
           <Marker
             data={d}

@@ -26,22 +26,27 @@ class App extends React.Component {
     this.stories = this.cleanData(stories);
     this.threads = this.getThreads(this.stories);
     this.state = {
-      focusOn: false,
+      focusMode: false, // true if story/thread is selected
       focusStoryKey: null,
       focusStory: null,
       focusThreadKey: null,
       focusThreadStories: null,
+      tooltipStory: null, // story to draw tooltip on (desktop)
     }
 
     // for event handling
     // TODO - Iron out redundancy with this logic
-    this.handleStorySelect = this.handleStorySelect.bind(this);
+    this.handleMarkerClick = this.handleMarkerClick.bind(this);
+    this.handleMouseEnter = this.handleMouseEnter.bind(this);
+    this.handleMouseLeave = this.handleMouseLeave.bind(this);
+    this.resetFocus = this.resetFocus.bind(this);
     this.getStoryByKey = this.getStoryByKey.bind(this);
-    this.handleThreadSelect = this.handleThreadSelect.bind(this);
+    this.selectThread = this.selectThread.bind(this);
     this.incrementThreadFocus = this.incrementThreadFocus.bind(this);
   }
 
   render(){
+    // console.log(this.state);
     return (
       <div className="container">
         <h1>Tracking Bozeman's growth</h1>
@@ -50,23 +55,28 @@ class App extends React.Component {
           stories={this.stories}
           threads={this.threads}
           getStory={this.getStoryByKey}
-          getThread={this.handleThreadSelect}
+          getThread={this.selectThread}
           getPrevThread={() => this.incrementThreadFocus(-1)}
           getNextThread={() => this.incrementThreadFocus(1)}
         />
         <StoryViz
           stories={this.stories}
-          focusOn={this.state.focusOn}
-          focusStory={this.state.focusStoryKey}
+          focusMode={this.state.focusMode}
+          focusStoryKey={this.state.focusStoryKey}
+          focusStory={this.state.focusStory}
           focusThread={this.state.focusThreadKey}
           threadStories={this.state.focusThreadStories}
+          tooltipStory={this.state.tooltipStory}
 
-          handleStorySelect={this.handleStorySelect}/>
+          handleMarkerClick={this.handleMarkerClick}
+          handleMouseEnter={this.handleMouseEnter}
+          handleMouseLeave={this.handleMouseLeave}
+          handleReset={this.resetFocus}
+          />
         <TeaseContainer
           focusThread={this.state.focusThreadKey}
           threadStories={this.state.focusThreadStories}
         />
-
       </div>
     )
   }
@@ -110,25 +120,70 @@ class App extends React.Component {
     });
     return threadStories;
   }
+  // INTERACTIVITY HANDLING - HIGH LEVEL
+  // reference to event objects
+  handleMarkerClick(story){
+    this.resetTooltip();
+    this.selectStory(story);
+  }
+  // assume this only works on desktop!
+  handleMouseEnter(story){
+    if (!this.state.focusMode){
+      this.setTeaseStories([story]);
+    }
+    // ALT BEHAVIOR
+    // // Tooltip unless focus is activated, then only on focus thread stories
+    // const matchFocusThread = (story.story_thread === this.state.focusThreadKey);
+    // if (!this.state.focusMode){
+    //   this.addTooltip(story);
+    // } else if (matchFocusThread) {
+    //   this.addTooltip(story);
+    // }
+  }
+  handleMouseLeave(){
+    if (!this.state.focusMode){
+      this.resetTooltip();
+    }
+  }
 
-  // INTERACTIVITY HANDLING
-  reset(){
+  // INTERACTIVITY HANDLING - LOW LEVEL
+  // reference to mechanics of what happens
+  resetFocus(){
     this.setState({
-      focusOn: false,
+      focusMode: false,
       focusStoryKey: null,
       focusStory: null,
       focusThreadKey: null,
       focusThreadStories: null,
     });
   }
-  handleThreadSelect(newThreadKey){
+  resetTooltip(){
+    this.setState({
+      tooltipStory: null,
+    });
+  }
+
+  addTooltip(story){
+    this.setState({
+      tooltipStory: story
+    });
+  }
+
+  setTeaseStories(stories){
+    this.setState({
+      focusThreadStories: stories,
+    })
+  }
+
+
+  selectThread(newThreadKey){
     console.log('new thread select', newThreadKey);
     const newThreadStories = this.getThreadStories(newThreadKey)
     const newFocusStory = newThreadStories[0];
     const newFocusStoryKey = newFocusStory.key;
 
     this.setState({
-      focusOn: true,
+      focusMode: true,
       focusStoryKey: newFocusStoryKey,
       focusStory: newFocusStory,
       focusThreadKey: newThreadKey,
@@ -138,19 +193,19 @@ class App extends React.Component {
   getStoryByKey(newStoryKey){
     const stories = this.stories.filter((d) => {return d.key === newStoryKey});
     const story = stories[0]; // Should only be one if keys are unique
-    this.handleStorySelect(story);
+    this.selectStory(story);
   }
 
-  handleStorySelect(newStory){
+  selectStory(newStory){
     const newStoryKey = newStory.key;
     const newThreadKey = (newStory.story_thread.length > 0) ? newStory.story_thread : null;
-
     this.setState({
-      focusOn: true,
+      focusMode: true,
       focusStoryKey: newStoryKey,
       focusStory: newStory,
       focusThreadKey: newThreadKey,
       focusThreadStories: this.getThreadStories(newThreadKey),
+      // tooltipStory: newStory,
     });
   }
 
@@ -168,7 +223,7 @@ class App extends React.Component {
 
     const newThreadKey = this.threads[newIndex];
     this.setState({
-      focusOn: true,
+      focusMode: true,
       focusStoryKey: null, // TODO: Figure out how to handle this
       focusStory: null,
       focusThreadKey: newThreadKey,

@@ -19,11 +19,14 @@ body {
 
   padding: 3px;
 
+  min-width: 100px;
   max-width: 140px;
 
   border: 1px solid #bbb;
   background-color: #fff;
   opacity: 1;
+
+  pointer-events: none;
 }
 
 @media (max-width: 768px){
@@ -63,7 +66,7 @@ body {
   height: auto;
   background-color: #fff;
   border-bottom: 1px solid #bbb;
-  position: sticky;
+  position: relative;
   padding-left: 10px;
   padding-right: 10px;
   text-align: center;
@@ -159,11 +162,16 @@ body {
   stroke: #bbb;
 }
 
-.tooltip-container {
-  /*height: auto;*/
-  /*width: 40%;*/
+/// TOOLTIP
 
-}
+// .tooltip-container {
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+
+//   background-color: #fff;
+//   padding: 5px;
+// }
 
 .tooltip-container.hide {
   display: none;
@@ -189,6 +197,7 @@ body {
 .marker:hover{
   stroke: black;
   stroke-width: 2;
+  fill: #eee;
 }
 
 .marker.prime-highlight {

@@ -16,23 +16,21 @@ class TeaseContainer extends React.Component {
         return this.buildBlurb(story);
       });
 
-      // const header = (
-      //   <div className='tease-header'>
-      //     <h4>{threadHeader}</h4>
-      //   </div>
-      // );
-       const header = (
+      const header = (
         <div className='tease-header'>
-          <h4>Header</h4>
+          <h4>{threadHeader}</h4>
+        </div>
+      );
+       const teaseDiv = (
+        <div className='story-teases'>
+            {teases}
         </div>
       );
 
       return (
         <div className='tease-container'>
           {header}
-          <div className='story-teases'>
-            {teases}
-          </div>
+          {teases}
         </div>
       )
     }

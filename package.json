@@ -35,6 +35,7 @@
     "react-bootstrap": "^0.31.0",
     "react-container-dimensions": "^1.3.2",
     "react-d3-core": "^1.3.9",
-    "react-onclickoutside": "^5.11.1"
+    "react-onclickoutside": "^5.11.1",
+    "react-tooltip": "^3.3.0"
   }
 }
