@@ -160,7 +160,7 @@ body {
       margin-top: 5px;
 
       // border-style: none;
-      border: 1px solid #bbb;
+      border: 1px solid #000;
 
       h4, h5, h6, p {
         margin-left: 5px;
@@ -172,6 +172,7 @@ body {
       }
       &:first-child{
         margin-top: 150px;
+        border: 1px solid #000;
       }
 
       &.highlight {
