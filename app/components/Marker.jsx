@@ -6,6 +6,7 @@ function Marker(props){
   // OR: Really, it should be a layout-applied property
   // const markerWidth = 12;
   let classNames = 'marker'
+  classNames += (props.data.type === 'growth-feature') ? ' secondary' : '';
   classNames += props.fade ? ' fadeout': '';
   classNames += props.highlight ? ' highlight' : '';
   classNames += props.prime ? ' prime-highlight': '';
@@ -15,7 +16,7 @@ function Marker(props){
     y={0}
     width={props.data.markerWidth}
     height={props.data.radius * 2}
-    fill={props.data.color}
+    // fill={props.data.color}
   />
   return marker;
 }

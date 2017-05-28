@@ -9,7 +9,7 @@ import onClickOutside from 'react-onclickoutside';
 class Typeahead extends React.Component {
   constructor(props){
     super(props);
-    this.placeholder = 'Search by title (e.g. "housing," "parking")';
+    this.placeholder = 'Search by headline phrase (e.g. "housing," "parking")';
     this.state = {
       inputValue: '',
       menuContents: null
@@ -21,6 +21,7 @@ class Typeahead extends React.Component {
   }
 
   render(){
+
     return (
       <div>
         <TypeaheadInput

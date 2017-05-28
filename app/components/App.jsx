@@ -47,19 +47,26 @@ class App extends React.Component {
 
   render(){
     // console.log(this.state);
+
     return (
       <div className="container">
         <h1>Tracking Bozeman's growth</h1>
         <p>Lead in text here</p>
         <ControlPanel
+          // display control
           stories={this.stories}
           threads={this.threads}
+          focusStoryKey={this.state.focusStoryKey}
+          focusThreadKey={this.state.focusThreadKey}
+          // interaction handlers
           getStory={this.getStoryByKey}
           getThread={this.selectThread}
           getPrevThread={() => this.incrementThreadFocus(-1)}
           getNextThread={() => this.incrementThreadFocus(1)}
+          resetFocus={this.resetFocus}
         />
         <StoryViz
+          // display control
           stories={this.stories}
           focusMode={this.state.focusMode}
           focusStoryKey={this.state.focusStoryKey}
@@ -67,15 +74,21 @@ class App extends React.Component {
           focusThread={this.state.focusThreadKey}
           threadStories={this.state.focusThreadStories}
           tooltipStory={this.state.tooltipStory}
-
+          // interaction handlers
           handleMarkerClick={this.handleMarkerClick}
           handleMouseEnter={this.handleMouseEnter}
           handleMouseLeave={this.handleMouseLeave}
           handleReset={this.resetFocus}
           />
         <TeaseContainer
+          // display control
           focusThread={this.state.focusThreadKey}
+          focusStoryKey={this.state.focusStoryKey}
           threadStories={this.state.focusThreadStories}
+          // interaction handlers
+          getStory={this.getStoryByKey}
+          getPrevStory={() => this.incrementStoryFocus(-1)}
+          getNextStory={() => this.incrementStoryFocus(1)}
         />
       </div>
     )
@@ -130,6 +143,9 @@ class App extends React.Component {
   handleMouseEnter(story){
     if (!this.state.focusMode){
       this.setTeaseStories([story]);
+      this.setFocusStory(story);
+    } else if (this.state.focusThreadKey === story.story_thread){
+      this.setFocusStory(story);
     }
     // ALT BEHAVIOR
     // // Tooltip unless focus is activated, then only on focus thread stories
@@ -141,9 +157,12 @@ class App extends React.Component {
     // }
   }
   handleMouseLeave(){
-    if (!this.state.focusMode){
-      this.resetTooltip();
-    }
+    // if (!this.state.focusMode){
+    //   // this.resetTooltip();
+    //   this.setTeaseStories(null);
+    //   this.setFocusStory(null);
+    // }
+
   }
 
   // INTERACTIVITY HANDLING - LOW LEVEL
@@ -175,6 +194,14 @@ class App extends React.Component {
     })
   }
 
+  setFocusStory(story){
+    const newKey = story ? story.key : null;
+    this.setState({
+      focusStory: story,
+      focusStoryKey: newKey,
+    });
+  }
+
 
   selectThread(newThreadKey){
     console.log('new thread select', newThreadKey);
@@ -191,6 +218,7 @@ class App extends React.Component {
     });
   }
   getStoryByKey(newStoryKey){
+    console.log('get story by', newStoryKey);
     const stories = this.stories.filter((d) => {return d.key === newStoryKey});
     const story = stories[0]; // Should only be one if keys are unique
     this.selectStory(story);
@@ -198,15 +226,27 @@ class App extends React.Component {
 
   selectStory(newStory){
     const newStoryKey = newStory.key;
-    const newThreadKey = (newStory.story_thread.length > 0) ? newStory.story_thread : null;
-    this.setState({
-      focusMode: true,
-      focusStoryKey: newStoryKey,
-      focusStory: newStory,
-      focusThreadKey: newThreadKey,
-      focusThreadStories: this.getThreadStories(newThreadKey),
-      // tooltipStory: newStory,
-    });
+    const newThreadKey = newStory.story_thread;
+    const partOfStoryThread = (newStory.story_thread.length > 0);
+    if (partOfStoryThread) {
+      this.setState({
+        focusMode: true,
+        focusStoryKey: newStoryKey,
+        focusStory: newStory,
+        focusThreadKey: newThreadKey,
+        focusThreadStories: this.getThreadStories(newThreadKey),
+        // tooltipStory: newStory,
+      });
+    } else {
+      this.setState({
+        focusMode: true,
+        focusStoryKey: newStoryKey,
+        focusStory: newStory,
+        focusThreadKey: null,
+        focusThreadStories: [newStory],
+        // tooltipStory: newStory,
+      });
+    }
   }
 
   incrementThreadFocus(increment){
@@ -214,22 +254,33 @@ class App extends React.Component {
     const threadKey = this.state.focusThreadKey;
     const index = this.threads.indexOf(threadKey);
 
-    console.log(threadKey, index, increment);
-    if (index === -1) throw 'Err, no match to current thread';
+    let newIndex = index + increment;
+    if (newIndex < 0) newIndex = length - 1;
+    if (newIndex >= length) newIndex = 0;
+    if (index === -1) newIndex = 0; // no match case
+
+    const newThreadKey = this.threads[newIndex];
+    this.selectThread(newThreadKey);
+  }
+  incrementStoryFocus(increment){
+    const stories = this.state.focusMode ? this.state.focusThreadStories : this.stories;
+    const length = stories.length;
+    const storyKey = this.state.focusStoryKey;
+    const keys = stories.map(d => d.key);
+    const index = keys.indexOf(storyKey);
 
     let newIndex = index + increment;
     if (newIndex < 0) newIndex = length - 1;
     if (newIndex >= length) newIndex = 0;
+    if (index === -1) newIndex = 0; // no match found
 
-    const newThreadKey = this.threads[newIndex];
-    this.setState({
-      focusMode: true,
-      focusStoryKey: null, // TODO: Figure out how to handle this
-      focusStory: null,
-      focusThreadKey: newThreadKey,
-      focusThreadStories: this.getThreadStories(newThreadKey),
-    });
-
+    const newStory = stories[newIndex];
+    if (!this.state.focusMode){
+      this.setTeaseStories([newStory]);
+      this.setFocusStory(newStory);
+    } else if (this.state.focusThreadKey === newStory.story_thread){
+      this.setFocusStory(newStory);
+    }
   }
 }
 

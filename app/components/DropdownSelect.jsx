@@ -13,10 +13,19 @@ class DropdownSelect extends React.Component {
       );
     });
 
+    const topItems = [
+      (<MenuItem key='reset' onClick={this.props.resetFocus}>
+        Reset view
+      </MenuItem>),
+      (<MenuItem key='line' divider/>)
+    ];
+
+    const menu = topItems.concat(menuItems)
+
     const buttonGroup = (
       <ButtonGroup>
-        <DropdownButton title="Select by storyline" id="bg-nested-dropdown">
-          {menuItems}
+        <DropdownButton title="" id="bg-nested-dropdown">
+          {menu}
         </DropdownButton>
         <Button
           onClick={this.props.getPrevThread}
