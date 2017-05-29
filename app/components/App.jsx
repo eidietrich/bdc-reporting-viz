@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import ControlPanel from './ControlPanel.jsx';
 import StoryViz from './StoryViz.jsx';
-import TeaseContainer from './TeaseContainer.jsx';
+import BlurbContainer from './BlurbContainer.jsx';
 import StoryOutline from './StoryOutline.jsx'
 
 import stories from './../data/stories.json';
@@ -26,6 +26,9 @@ class App extends React.Component {
     this.stories = this.cleanData(stories);
     this.threads = this.getThreads(this.stories);
     this.state = {
+      windowWidth: window.innerWidth,
+      windowHeight: window.innerHeight,
+      isMobile: null,
       focusMode: false, // true if story/thread is selected
       focusStoryKey: null,
       focusStory: null,
@@ -43,6 +46,12 @@ class App extends React.Component {
     this.getStoryByKey = this.getStoryByKey.bind(this);
     this.selectThread = this.selectThread.bind(this);
     this.incrementThreadFocus = this.incrementThreadFocus.bind(this);
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+  }
+
+  componentWillMount(){
+    this.updateWindowDimensions();
+    window.addEventListener('resize', this.updateWindowDimensions);
   }
 
   render(){
@@ -80,8 +89,9 @@ class App extends React.Component {
           handleMouseLeave={this.handleMouseLeave}
           handleReset={this.resetFocus}
           />
-        <TeaseContainer
+        <BlurbContainer
           // display control
+          isMobile={this.state.isMobile}
           focusThread={this.state.focusThreadKey}
           focusStoryKey={this.state.focusStoryKey}
           threadStories={this.state.focusThreadStories}
@@ -281,6 +291,15 @@ class App extends React.Component {
     } else if (this.state.focusThreadKey === newStory.story_thread){
       this.setFocusStory(newStory);
     }
+  }
+
+  updateWindowDimensions(){
+    const breakpoint = 768;
+    this.setState({
+      windowWidth: window.innerWidth,
+      windowHeight: window.innerHeight,
+      isMobile: (window.innerWidth < breakpoint)
+    });
   }
 }
 
