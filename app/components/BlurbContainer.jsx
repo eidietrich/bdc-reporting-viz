@@ -83,12 +83,12 @@ class BlurbScrollerMobile extends React.Component {
     const highlightWidth = this.highlightNode.offsetWidth;
     const highlightMidpoint = highlightLeft + 0.5 * highlightWidth;
 
+    // Set highlight midpoint to container midpoint
     this.highlightScrollDepth = highlightMidpoint - 0.5 *containerWidth;
-
-    this.scrollLeftThreshold =
-      this.highlightScrollDepth - 0.5 * highlightWidth;
-    this.scrollRightThreshold =
-      this.highlightScrollDepth + 0.5 * highlightWidth;
+    // highlight right aligns with container midpoint
+    this.maxScroll = highlightLeft + highlightWidth - 0.5 * containerWidth;
+    // highlight left aligns with container midpoint
+    this.minScroll = highlightLeft - 0.5 * containerWidth;
 
   }
 
@@ -98,11 +98,11 @@ class BlurbScrollerMobile extends React.Component {
 
   handleScroll(){
     const scrollDepth = this.containerNode.scrollLeft;
-    if (scrollDepth < this.scrollLeftThreshold) {
+    if (scrollDepth < this.minScroll) {
       this.scrollHandling = true;
       this.props.getPrevStory();
     }
-    if (scrollDepth > this.scrollRightThreshold) {
+    if (scrollDepth > this.maxScroll) {
       this.scrollHandling = true;
       this.props.getNextStory();
     }
@@ -154,13 +154,12 @@ class BlurbScrollerDesktop extends React.Component {
     const highlightHeight = this.highlightNode.offsetHeight;
     const highlightMidpoint = highlightTop + 0.5 * highlightHeight;
 
-    this.highlightScrollDepth = highlightMidpoint - containerHeight;
-
-    this.scrollUpThreshold =
-      this.highlightScrollDepth - 0.5 * highlightHeight;
-    this.scrollDownThreshold =
-      this.highlightScrollDepth + 0.5 * highlightHeight;
-
+    // put element midpoint at container midpoint
+    this.highlightScrollDepth = highlightMidpoint - 0.5 *containerHeight;
+    // when highlight box top aligns with container top
+    this.maxScroll = highlightTop;
+    // when highlight box bottom aligns with container bottom
+    this.minScroll = highlightTop + highlightHeight - containerHeight;
   }
 
   setScrollToHighlightBlurb(){
@@ -174,11 +173,11 @@ class BlurbScrollerDesktop extends React.Component {
 
   handleScroll(){
     const scrollDepth = this.containerNode.scrollTop;
-    if (scrollDepth < this.scrollUpThreshold) {
+    if (scrollDepth < this.minScroll) {
       this.scrollHandling = true;
       this.props.getPrevStory();
     }
-    if (scrollDepth > this.scrollDownThreshold) {
+    if (scrollDepth > this.maxScroll) {
       this.scrollHandling = true;
       this.props.getNextStory();
     }

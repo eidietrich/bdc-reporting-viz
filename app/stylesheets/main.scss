@@ -50,6 +50,14 @@ body {
 
 .control-panel {
   margin-bottom: 10px;
+
+  .dropdown-menu {
+    height: auto;
+    max-height: 200px;
+    max-width: 100%;
+    overflow-x: hidden;
+    // display: block;
+  }
 }
 
 @media (max-width: $break-point){
@@ -77,16 +85,23 @@ body {
   .blurb-header {
 
   }
-  .blurb-scroller.mobile {
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space: nowrap;
-  }
-  .blurb-scroller.desktop {
-    overflow-x: hidden;
+  .blurb-scroller {
+    /*Set relative for offset calcs by scroll interaction */
+    position: relative;
+    left: 0;
+    top: 0;
+
+    &.mobile {
+      overflow-x: auto;
+      overflow-y: hidden;
+      white-space: nowrap;
+    }
+    &.desktop {
+      overflow-x: hidden;
     overflow-y: auto;
     white-space: normal;
     height: 100%;
+    }
   }
   .blurb {
     border: 1px solid #000;
@@ -355,9 +370,4 @@ body {
   height: 100px;
 }
 
-.dropdown-menu {
-  height: auto;
-  max-height: 200px;
-  overflow-x: hidden;
-  // display: block;
-}
+
