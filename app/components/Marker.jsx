@@ -10,14 +10,23 @@ function Marker(props){
   classNames += props.fade ? ' fadeout': '';
   classNames += props.highlight ? ' highlight' : '';
   classNames += props.prime ? ' prime-highlight': '';
-  const marker = <rect
+
+  const fill = (props.data.markerWidth > 10) ? 'url(#Lines)' : '#bbb';
+  const rect = (<rect
     className={classNames}
     x={-props.data.markerWidth / 2}
     y={0}
     width={props.data.markerWidth}
     height={props.data.radius * 2}
+    fill={fill}
     // fill={props.data.color}
-  />
+  />);
+
+  const marker = (
+    <g>
+      {rect}
+    </g>
+  )
   return marker;
 }
 

@@ -25,6 +25,33 @@ Three key aspects of state (passed down from App):
 
 */
 
+const fill = '#a6761d'
+const background = '#ffffff'
+const lines = (
+  <g className='markerPattern' style={{'stroke': fill}}>
+    <rect className='background' style={{'stroke': 'none', 'fill': background}} width="20" height="40"/>
+    <rect style={{'stroke': 'none', 'fill': fill}}  x="2" y="2" width="16" height="8"/>
+    <line x1="9" y1="2.5" x2="18" y2="2.5"/>
+    <line x1="9" y1="4.5" x2="18" y2="4.5"/>
+    <line x1="9" y1="6.5" x2="18" y2="6.5"/>
+    <line x1="2" y1="8.5" x2="18" y2="8.5"/>
+    <line x1="2" y1="10.5" x2="18" y2="10.5"/>
+    <line x1="2" y1="12.5" x2="18" y2="12.5"/>
+    <line x1="2" y1="14.5" x2="18" y2="14.5"/>
+    <line x1="2" y1="16.5" x2="18" y2="16.5"/>
+    <line x1="2" y1="18.5" x2="18" y2="18.5"/>
+    <line x1="2" y1="20.5" x2="18" y2="20.5"/>
+    <line x1="2" y1="24.5" x2="18" y2="24.5"/>
+    <line x1="2" y1="22.5" x2="18" y2="22.5"/>
+    <line x1="2" y1="26.5" x2="14" y2="26.5"/>
+    <line x1="2" y1="28.5" x2="18" y2="28.5"/>
+    <line x1="2" y1="32.5" x2="18" y2="32.5"/>
+    <line x1="2" y1="30.5" x2="18" y2="30.5"/>
+    <line x1="2" y1="34.5" x2="18" y2="34.5"/>
+    <line x1="2" y1="36.5" x2="7" y2="36.5"/>
+  </g>
+);
+
 class StoryViz extends React.Component {
   constructor(props){
     super(props)
@@ -93,6 +120,12 @@ class StoryViz extends React.Component {
     const plotTranslate = `translate(${this.margin.left},${this.margin.top})`;
     const svg = (
       <svg width={this.width} height={this.height} >
+        <defs>
+          <pattern id="Lines" width="90%" height="30">
+            {lines}
+          </pattern>
+        </defs>
+
         <g className="plot" transform={plotTranslate}>
           <Grid scale={this.dateScale} height={this.plotHeight}/>
           <Connectors stories={this.props.threadStories}/>

@@ -20,6 +20,7 @@ body {
 
 .viz-container {
   border: 1px solid #bbb;
+  background-color: #6ba7e0;
   height: 300px;
 }
 
@@ -28,6 +29,7 @@ body {
     float: left;
     width: 60%;
     height: 500px;
+
   }
 }
 
@@ -330,11 +332,11 @@ body {
   opacity: 1.0;
   // cursor: pointer;
   stroke: #666;
-  stroke-width: 1;
-  fill: $marker-color;
+  stroke-width: 0;
+  // fill: $marker-color;
 
   &.secondary {
-    fill: $secondary-marker-color;
+    // fill: $secondary-marker-color;
   }
 
   &.fadeout {
@@ -350,7 +352,7 @@ body {
   &.prime-highlight {
     stroke: black;
     stroke-width: 2;
-    fill: #fff;
+    // fill: #fff;
     opacity: 1;
   }
 }
