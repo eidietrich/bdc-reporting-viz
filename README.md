@@ -1,3 +1,5 @@
 # Bozeman's growth, visualized
 
-Recoding earlier version with React.
+React visual visualizing two years of beat reporting on growth and land use planning in Bozeman, Montana.
+
+Original content copyright Bozeman Daily Chronicle (headlines etc. here pulled from an RSS feed).

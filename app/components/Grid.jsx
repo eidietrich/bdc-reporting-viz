@@ -1,5 +1,6 @@
 import React from 'react';
 import AxisTop from './AxisTop';
+import { timeMonth } from 'd3';
 
 function Grid(props){
   const xAxis = (
@@ -15,15 +16,24 @@ function Grid(props){
   );
   const topAxis = <AxisTop
     scale={props.scale}
-    line tick label
+    interval={3}
+    tick label
     tickLength={5}/>;
-  const gridLines = <AxisTop
+  const minorGridLines = <AxisTop
     scale={props.scale}
+    interval={1}
     tick
-    tickLength={-props.height}/>;
+    tickLength={-props.height}
+    tickClass='grid-minor'/>;
+  const majorGridLines = <AxisTop
+    scale={props.scale}
+    interval={3}
+    tick
+    tickLength={-props.height}
+    tickClass='grid-major'/>;
 
   return (<g className="grid-container">
-      {xAxis}{yAxis}{topAxis}{gridLines}
+      {xAxis}{yAxis}{topAxis}{minorGridLines}{majorGridLines}
     </g>);
 }
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FormControl, InputGroup } from 'react-bootstrap';
+import { FormControl, InputGroup, ControlLabel } from 'react-bootstrap';
 import onClickOutside from 'react-onclickoutside';
 
 // options is array of {key: '...', 'label': '...'} objects
@@ -9,7 +9,7 @@ import onClickOutside from 'react-onclickoutside';
 class Typeahead extends React.Component {
   constructor(props){
     super(props);
-    this.placeholder = 'Search by headline phrase (e.g. "housing," "parking")';
+    this.placeholder = 'Search in headline (e.g. "housing")';
     this.state = {
       inputValue: '',
       menuContents: null
@@ -24,6 +24,7 @@ class Typeahead extends React.Component {
 
     return (
       <div>
+        <ControlLabel>Search for an article</ControlLabel>
         <TypeaheadInput
           placeholder={this.placeholder}
           value={this.state.inputValue}

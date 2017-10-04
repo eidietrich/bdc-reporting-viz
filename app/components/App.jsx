@@ -59,7 +59,7 @@ class App extends React.Component {
 
     return (
       <div className="container">
-        <h1>Tracking Bozeman's growth</h1>
+        <h1>Two years of reporting on Bozeman's growth</h1>
         <p>Lead in text here</p>
         <ControlPanel
           // display control
@@ -214,7 +214,7 @@ class App extends React.Component {
 
 
   selectThread(newThreadKey){
-    console.log('new thread select', newThreadKey);
+    // console.log('new thread select', newThreadKey);
     const newThreadStories = this.getThreadStories(newThreadKey)
     const newFocusStory = newThreadStories[0];
     const newFocusStoryKey = newFocusStory.key;

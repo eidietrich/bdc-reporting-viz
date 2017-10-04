@@ -1,9 +1,26 @@
 
+
+Oct. 3 2017
+Getting back into this TODO
+- Figure out new intro framing 
+- BlurbContainer spec behavior:
+    + Default contents TBD (color/size key?)
+    + Display theme key before blurbs on mobile
+- Better colors
+- Load in final data (and clean), July 2015 through June 2017
+    + Separate out growth series as separate indicator
+    + Create labels for topic threads (and change display to them)
+- Fine-tune control panel
+    + Display topic thread name in pill
+    + Add topic thread reset
+    + Change topic thread to 'select' from react-bootstrap?
+    + Number/format results in search typeahead (resolve width issue on mobile)
+- Fine-tune CSS
+
 Jul 1 2017
 
 TODO
-- Update with fresh/full data, July 2015 through June 2017
-- Add 'reset' option 
+- Update with fresh/full data
 - Play with thumnail photos only for features
 - Play with markers -- make look like little articles
 - Default blurb container display - 
@@ -12,8 +29,31 @@ TODO
 - Write lede-in text
 
 
+# Hierarchy
 
-LEAD-IN Text
+App
+- ControlPanel
+    + Typeahead
+    + DropdownSelect
+- StoryViz
+    + Tooltip
+    + Grid
+    + Connectors
+    + Markers
+- BlurbContainer
+    + BlurbScrollerMobile
+        * BlurbMobile
+    + BlurbScrollerDesktop
+        * 
+    + BlurbContainerDefaultContents
+- StoryOutline (old/unused)
+
+# LEAD-IN New:
+
+It's hard to see how just how much work local news produces, given how news tends to come to readers piecemeal these days, through the web. But this is what we're in danger losing.
+
+
+# LEAD-IN Text
 
 # Two years of tracking Bozeman's growth
 

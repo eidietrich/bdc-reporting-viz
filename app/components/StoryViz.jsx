@@ -26,7 +26,7 @@ Three key aspects of state (passed down from App):
 */
 
 const fill = '#a6761d'
-const background = '#ffffff'
+const background = '#cccccc'
 const lines = (
   <g className='markerPattern' style={{'stroke': fill}}>
     <rect className='background' style={{'stroke': 'none', 'fill': background}} width="20" height="40"/>

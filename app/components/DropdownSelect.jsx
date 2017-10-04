@@ -1,46 +1,55 @@
 import React, { Component } from 'react';
-import { Button, ButtonGroup, DropdownButton, MenuItem } from 'react-bootstrap';
+import { Button, ButtonGroup, DropdownButton, MenuItem, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 
 class DropdownSelect extends React.Component {
 
   render(){
     const menuItems = this.props.options.map((option, i) => {
       return (
-        <MenuItem
-          key={String(i)}
-          onClick={() => this.handleSubmit(option)}
-        >{option}</MenuItem>
+        <option key={String(i)} value={option}>
+          {option}
+        </option>
       );
     });
-
-    const topItems = [
-      (<MenuItem key='reset' onClick={this.props.resetFocus}>
-        Reset view
-      </MenuItem>),
-      (<MenuItem key='line' divider/>)
-    ];
-
-    const menu = topItems.concat(menuItems)
+    const dropdown = (
+      <FormControl
+        componentClass="select"
+        value={this.props.focusThreadKey || 'reset'}
+        onChange={e => {this.handleSubmit(e.target.value);}}>
+        <option value="reset">All topics</option>
+        {menuItems}
+      </FormControl>
+    );
 
     const buttonGroup = (
       <ButtonGroup>
-        <DropdownButton title="" id="bg-nested-dropdown">
-          {menu}
-        </DropdownButton>
         <Button
           onClick={this.props.getPrevThread}
         >&larr;</Button>
         <Button
           onClick={this.props.getNextThread}
         >&rarr;</Button>
+        <Button
+          onClick={this.props.resetFocus}
+        >&#8634;</Button>
       </ButtonGroup>
     );
 
-    return buttonGroup;
+    return (
+      <div>
+        <ControlLabel>Highlight a topic</ControlLabel>
+        {dropdown}
+        {buttonGroup}
+      </div>
+    );
   }
 
   handleSubmit(option){
-    this.props.getThread(option);
+    if (option === 'reset'){
+      this.props.resetFocus();
+    } else {
+      this.props.getThread(option);
+    }
   }
 
 }

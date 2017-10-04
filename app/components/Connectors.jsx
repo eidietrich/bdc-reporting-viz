@@ -4,7 +4,7 @@ import { line, curveMonotoneY } from 'd3';
 // Line generator
 var curve = line()
     .x(function(d){ return d.x; })
-    .y(function(d){ return d.y; })
+    .y(function(d){ return d.y + d.radius; })
     .curve(curveMonotoneY);
 
 function Connectors(props){

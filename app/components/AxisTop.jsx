@@ -1,10 +1,10 @@
 import React from 'react';
-import {timeFormat} from 'd3';
+import {timeFormat, timeMonth} from 'd3';
 
 function AxisTop(props){
   // This is going to be hard
   const tickLength = props.tickLength;
-  const ticks = props.scale.ticks();
+  const ticks = props.scale.ticks(timeMonth.every(props.interval));
   const bounds = props.scale.domain();
 
   let axisLine = <line
@@ -19,7 +19,7 @@ function AxisTop(props){
     return <line x1={x} x2={x}
       y1={0} y2={-tickLength}
       key={String(i)}
-      stroke={'black'}/>
+      className={props.tickClass}/>
   });
   let tickLabels = ticks.map((tick, i) => {
     const x = props.scale(tick);
