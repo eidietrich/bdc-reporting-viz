@@ -8,9 +8,11 @@ class BlurbScrollerDesktop extends React.Component {
       const isHighlight = (this.props.focusStoryKey === story.key);
       return <BlurbDesktop
         story={story}
+        storyCategories={this.props.storyCategories}
         isHighlight={isHighlight}
         formatDate={this.props.formatDate}
         key={story.key}
+        getThread={this.props.getThread}
       />
     });
     const header = this.props.focusThread ? (<div className='blurb-scroller-header'>{this.props.focusThread}</div>) : null;
@@ -105,6 +107,20 @@ function BlurbDesktop(props){
   //     <img src={props.story.thumbnail} />
   //   </div>);
   const image = null;
+
+  const tags = props.story.categories
+    .map(key => {
+      const matchCategory = props.storyCategories.filter(cat => key === cat.key)[0]
+      return (<span
+        key={key}
+        onClick={()=> props.getThread(key)}
+        >
+          {matchCategory.label}
+        </span>
+      );
+    })
+    .reduce((acc, x) => acc === null ? [x] : [acc, ' ', x], null);
+
   return (
     <div className={className}>
       <h5>{props.story.type}</h5>
@@ -112,6 +128,7 @@ function BlurbDesktop(props){
       <h4><a href={props.story.link} target='_blank'>
         {props.story.title}
       </a></h4>
+      <p className="tag-container">{tags}</p>
       <h6>{`${props.story.creator} | ${date}`}</h6>
     </div>
   );

@@ -28,9 +28,12 @@ class BlurbContainer extends React.Component {
     } else {
       contents = <BlurbScrollerDesktop
         stories={this.props.threadStories}
+        storyCategories={this.props.storyCategories}
+
         focusThread={this.props.focusThread}
         focusStoryKey={this.props.focusStoryKey}
         formatDate={this.formatDate}
+        getThread={this.props.getThread}
         getPrevStory={this.props.getPrevStory}
         getNextStory={this.props.getNextStory}
       />;

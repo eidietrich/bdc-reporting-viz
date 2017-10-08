@@ -60,8 +60,8 @@ class StoryViz extends React.Component {
       bottom: 50, right: 30
     };
 
-    this.startDate = new Date('Jun 1, 2015');
-    this.endDate = new Date('May 31, 2017');
+    this.startDate = new Date('Jul 1, 2015');
+    this.endDate = new Date('Jun 1, 2017');
     this.dateScale = scaleTime()
       .domain([this.startDate, this.endDate]);
   }
@@ -118,6 +118,24 @@ class StoryViz extends React.Component {
 
   buildSvg(){
     const plotTranslate = `translate(${this.margin.left},${this.margin.top})`;
+
+    const category = this.props.storyCategories.filter(cat => cat.key === this.props.focusThread)[0];
+
+    const grid = <Grid scale={this.dateScale} height={this.plotHeight}/>
+
+    const connectors = category && category.isThreaded ? <Connectors stories={this.props.threadStories}/> : null;
+    const markers = (
+      <Markers
+        stories={this.stories}
+        focusMode={this.props.focusMode}
+        focusStoryKey={this.props.focusStoryKey}
+        focusThread={this.props.focusThread}
+
+        handleMarkerClick={this.props.handleMarkerClick}
+        handleMouseEnter={this.props.handleMouseEnter}
+        handleMouseLeave={this.props.handleMouseLeave}
+      />);
+
     const svg = (
       <svg width={this.width} height={this.height} >
         <defs>
@@ -127,18 +145,9 @@ class StoryViz extends React.Component {
         </defs>
 
         <g className="plot" transform={plotTranslate}>
-          <Grid scale={this.dateScale} height={this.plotHeight}/>
-          <Connectors stories={this.props.threadStories}/>
-          <Markers
-            stories={this.stories}
-            focusMode={this.props.focusMode}
-            focusStoryKey={this.props.focusStoryKey}
-            focusThread={this.props.focusThread}
-
-            handleMarkerClick={this.props.handleMarkerClick}
-            handleMouseEnter={this.props.handleMouseEnter}
-            handleMouseLeave={this.props.handleMouseLeave}
-          />
+          {grid}
+          {connectors}
+          {markers}
         </g>
       </svg>
     )

@@ -1,0 +1,320 @@
+{
+    "how-will-we-grow":
+    {
+        "display": "How will we grow?",
+        "threaded": true,
+        "type": "series"
+    },
+    "city-elections":
+    {
+        "display": "City elections",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "l-and-j":
+    {
+        "display": "Law & justice center push",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "housing-plan":
+    {
+        "display": "Housing policy",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "water-conservation":
+    {
+        "display": "Water conservation",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "music-on-main":
+    {
+        "display": "Music on Main",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "north-park-sale":
+    {
+        "display": "North park sale",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "midtown-renewal":
+    {
+        "display": "Midtown renewal push",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "msu-housing":
+    {
+        "display": "Student housing",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "planning-coordination":
+    {
+        "display": "Planning coordination",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "spending-on-streets":
+    {
+        "display": "Spending on streets",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "koch-demolition":
+    {
+        "display": "Koch street demolition",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "parks-and-trails":
+    {
+        "display": "Building parks and trails",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "udc-update":
+    {
+        "display": "Updating the design code",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "bozeman-fiber":
+    {
+        "display": "Bringing businesses high-speed internet",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "homelessness":
+    {
+        "display": "Tackling homelessness",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "ymca-city":
+    {
+        "display": "Why the new YMCA is outside the city",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "heebs":
+    {
+        "display": "Heebs leaving downtown",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "lark-rialto":
+    {
+        "display": "Developing the Rialto and the Lark",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "baxter-davis":
+    {
+        "display": "Baxter and Davis signal effort",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "bozeman-taproom":
+    {
+        "display": "Bozeman Taproom & Hawthorne school",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "tree-plan":
+    {
+        "display": "Ash borer preparations",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "landfill":
+    {
+        "display": "Leaking landfill",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "swmbia-impact-fees":
+    {
+        "display": "Builders criticize city impact fees",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "growth-and-change":
+    {
+        "display": "Change with growth",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "cost-of-living":
+    {
+        "display": "Cost of living",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "city-budget":
+    {
+        "display": "City budgeting",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "loyal-garden":
+    {
+        "display": "Loyal Garden apartments",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "kukulski-departure":
+    {
+        "display": "City manager departure",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "floodplains":
+    {
+        "display": "FEMA floodplain maps",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "strategic-plan":
+    {
+        "display": "Strategic planning",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "bookmobile":
+    {
+        "display": "Library bookmobile",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "winco":
+    {
+        "display": "Winco store",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "parking":
+    {
+        "display": "Managing parking",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "vacation-rentals":
+    {
+        "display": "Vacation rentals",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "planning-director":
+    {
+        "display": "Planning director hiring",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "food-trucks":
+    {
+        "display": "Food truck regs",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "black-olive":
+    {
+        "display": "Black-Olive building",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "sobo-lofts":
+    {
+        "display": "SOBO Lofts",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "walkability":
+    {
+        "display": "Walkability",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "farmland-preservation":
+    {
+        "display": "Farmland preservation",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "greyhound-bus":
+    {
+        "display": "Greyhound bus service",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "sanctuary-city":
+    {
+        "display": "Sanctuary city push",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "korner-klub-suit":
+    {
+        "display": "Korner Klub septic",
+        "threaded": true,
+        "type": "story-arc"
+    },
+    "human-interest":
+    {
+        "display": "Human interest",
+        "threaded": false,
+        "type": "tag"
+    },
+    "growth-indicators":
+    {
+        "display": "Growth indicators",
+        "threaded": false,
+        "type": "tag"
+    },
+    "comings-and-goings":
+    {
+        "display": "Business comings/goings",
+        "threaded": false,
+        "type": "tag"
+    },
+    "development":
+    {
+        "display": "Development",
+        "threaded": false,
+        "type": "tag"
+    },
+    "crime":
+    {
+        "display": "Crime",
+        "threaded": false,
+        "type": "tag"
+    },
+    "housing":
+    {
+        "display": "Housing",
+        "threaded": false,
+        "type": "tag"
+    },
+    "transportation":
+    {
+        "display": "Transportation",
+        "threaded": false,
+        "type": "tag"
+    },
+    "historic-preservation":
+    {
+        "display": "Historic preservation",
+        "threaded": false,
+        "type": "tag"
+    },
+    "tax-policy":
+    {
+        "display": "Tax policy",
+        "threaded": false,
+        "type": "tag"
+    }
+}

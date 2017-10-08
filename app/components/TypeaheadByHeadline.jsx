@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import TypeaheadInput from './TypeaheadInput';
 import { FormControl, InputGroup, ControlLabel } from 'react-bootstrap';
 import onClickOutside from 'react-onclickoutside';
 
@@ -6,7 +7,7 @@ import onClickOutside from 'react-onclickoutside';
 // label for display, key for return value
 
 
-class Typeahead extends React.Component {
+class TypeaheadByHeadline extends React.Component {
   constructor(props){
     super(props);
     this.placeholder = 'Search in headline (e.g. "housing")';
@@ -85,19 +86,7 @@ class Typeahead extends React.Component {
 
 }
 
-export default onClickOutside(Typeahead);
-
-class TypeaheadInput extends React.Component {
-  render(){
-    return <FormControl
-      type='text'
-      value={this.props.value}
-      placeholder={this.props.placeholder}
-      onChange={this.props.handleInput}
-      onFocus={this.props.onFocus}
-    />
-  }
-}
+export default onClickOutside(TypeaheadByHeadline);
 
 class TypeaheadMenu extends React.Component {
   render(){

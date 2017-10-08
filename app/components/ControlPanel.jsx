@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
 
-import Typeahead from './Typeahead.jsx';
-import DropdownSelect from './DropdownSelect.jsx';
+import TypeaheadByHeadline from './TypeaheadByHeadline.jsx';
+import TopicSelector from './TopicSelector.jsx';
 
 class ControlPanel extends React.Component {
   render(){
     return (
       <div className='control-panel'>
-        <DropdownSelect
-          options={this.props.threads}
+        <TopicSelector
+          storyCategories={this.props.storyCategories}
           getThread={this.props.getThread}
           focusThreadKey={this.props.focusThreadKey}
           getPrevThread={this.props.getPrevThread}
           getNextThread={this.props.getNextThread}
           resetFocus={this.props.resetFocus}
         />
-        <Typeahead
+        <TypeaheadByHeadline
           options={this.makeHeadlineOptions()}
           focusStoryKey={this.props.focusStoryKey}
           getStory={this.props.getStory}

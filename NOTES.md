@@ -2,32 +2,30 @@
 
 Oct. 3 2017
 Getting back into this TODO
-- Figure out new intro framing 
 - BlurbContainer spec behavior:
     + Default contents TBD (color/size key?)
     + Display theme key before blurbs on mobile
-- Better colors
-- Load in final data (and clean), July 2015 through June 2017
-    + Separate out growth series as separate indicator
-    + Create labels for topic threads (and change display to them)
-- Fine-tune control panel
-    + Display topic thread name in pill
-    + Add topic thread reset
-    + Change topic thread to 'select' from react-bootstrap?
-    + Number/format results in search typeahead (resolve width issue on mobile)
-- Fine-tune CSS
+- Fine-tune CSS/styling
+    + Better colors
+    + Nicer design for ticker shape
+- Figure out/write new intro framing 
+- Push to github pages, pass around for UI testing
+- On tag select, keep memory of focus node
+- Multiple columns for highlight topic typeahead menu
+- Include #s of nodes in highlight topic typeahead menu, sort by #
+
+Data cleaning to-dos
+- Food trucks missing early pieces (attached to vacation rentals?)
+- Cost-of-living missing first-annual beer index story
+- ID blog posts/midform/features
+- Tighten housing plan narrative
+- Add Kagy to spending-on-streets?
+- Add 'with dataviz?' tag?
+- Does cost-of-living fit in somewhere else?
+- Is the walkability graphic in there?
+- Housing tag is redundant
 
 Jul 1 2017
-
-TODO
-- Update with fresh/full data
-- Play with thumnail photos only for features
-- Play with markers -- make look like little articles
-- Default blurb container display - 
-- Add key for colors, etc.
-- Push to github pages, pass around for UI testing (play with on mobile)
-- Write lede-in text
-
 
 # Hierarchy
 
@@ -47,6 +45,20 @@ App
         * 
     + BlurbContainerDefaultContents
 - StoryOutline (old/unused)
+
+# Interaction design:
+Ways to categorize stories:
+- type - blog/news/feature, etc. --> controls box color, blurb tag. Each story has exactly one.
+- series - tag for 'How will we grow?' etc. Story can have zero or one.
+- story_threads - Threaded narrative. Story can have zero or more
+- tags - Unthreaded collections (e.g. data viz). Story can have zero or more.
+
+Interactions:
+- Mouseover (desktop only) --> Display blurb for story in blurb container
+- Click/tap story --> Make story prime highlight, highlight/connect others in series/thread if there is one.
+- Select by title search --> Same as clicking/tapping story
+- Select in 'highlight topic' box --> highlight/connect stories in series/thread OR highlight stories with same topic
+
 
 # LEAD-IN New:
 

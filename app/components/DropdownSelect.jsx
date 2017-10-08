@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, ButtonGroup, DropdownButton, MenuItem, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+import { Button, ButtonGroup, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 
 class DropdownSelect extends React.Component {
 
@@ -20,7 +20,6 @@ class DropdownSelect extends React.Component {
         {menuItems}
       </FormControl>
     );
-
     const buttonGroup = (
       <ButtonGroup>
         <Button
@@ -36,7 +35,7 @@ class DropdownSelect extends React.Component {
     );
 
     return (
-      <div>
+      <div className='dropd'>
         <ControlLabel>Highlight a topic</ControlLabel>
         {dropdown}
         {buttonGroup}
