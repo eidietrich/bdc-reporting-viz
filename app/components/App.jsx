@@ -27,31 +27,23 @@ class App extends React.Component {
     this.stories = this.cleanData(stories);
 
     this.initializeStoryCategories(categoryKeys, this.stories)
-    // this.logUniqueProperties(); // Utility function
     this.state = {
       windowWidth: window.innerWidth,
       windowHeight: window.innerHeight,
       isMobile: null,
       focusMode: false, // true if story/thread is selected
-      // focusStoryKey: null,
       focusStory: null,
-
       focusThreadKey: null,
       focusThreadStories: null,
     }
 
     // for event handling
-    // TODO - Iron out redundancy with this logic
     this.handleMarkerClick = this.handleMarkerClick.bind(this);
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
     this.resetFocus = this.resetFocus.bind(this);
     this.selectStoryByKey = this.selectStoryByKey.bind(this);
     this.selectCategoryByKey = this.selectCategoryByKey.bind(this);
-
-
-    // this.getStoryByKey = this.getStoryByKey.bind(this);
-    // this.selectThread = this.selectThread.bind(this);
     this.incrementCategoryFocus = this.incrementCategoryFocus.bind(this);
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
   }
@@ -344,27 +336,16 @@ class App extends React.Component {
 
   // UTILITY FUNCTIONS
 
-  concatPropertyArrays(data, key){
-    // utility function
-    let initial = {};
-    initial[key] = [];
-    return data.reduce((a,b) => {
-      const concated = a[key].concat(b[key]);
-      let obj = {}
-      obj[key] = concated;
-      return obj;
-    }, initial)
-  }
-
-  // logUniqueProperties(){
-  //   const output = {}
-  //   this.threads.forEach(i => output[i] = {
-  //     'display': i, 'threaded': true,
-  //     'type': 'story-arc'})
-  //   this.tags.forEach(i => output[i] = {
-  //     'display': i, 'threaded': false,
-  //     'type': 'tag'})
-  //   console.log(JSON.stringify(output));
+  // concatPropertyArrays(data, key){
+  //   // utility function
+  //   let initial = {};
+  //   initial[key] = [];
+  //   return data.reduce((a,b) => {
+  //     const concated = a[key].concat(b[key]);
+  //     let obj = {}
+  //     obj[key] = concated;
+  //     return obj;
+  //   }, initial)
   // }
 
   updateWindowDimensions(){
