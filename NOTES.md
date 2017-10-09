@@ -31,8 +31,10 @@ Jul 1 2017
 
 App
 - ControlPanel
-    + Typeahead
-    + DropdownSelect
+    + TypeaheadByHeadline (can select specific stories)
+    + TopicSelector (can select categories)
+        * TypeaheadByTopic
+        * Other controls
 - StoryViz
     + Tooltip
     + Grid

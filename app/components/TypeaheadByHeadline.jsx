@@ -74,9 +74,7 @@ class TypeaheadByHeadline extends React.Component {
   }
 
   handleSubmit(item){
-    console.log('submitted', item);
-    console.log(this.props);
-    this.props.getStory(item.key)
+    this.props.selectStoryByKey(item.key)
     this.setState({
       inputValue: item.label,
       menuContents: null
@@ -101,7 +99,6 @@ class TypeaheadMenu extends React.Component {
         </a>
       </li>);
     });
-    // console.log(items);
 
     // style display: block; overrides default hiding of menu items
     return (

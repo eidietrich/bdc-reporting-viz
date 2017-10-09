@@ -13,7 +13,7 @@ import { nest } from 'd3';
 class Typeahead extends React.Component {
   constructor(props){
     super(props);
-    this.placeholder = 'WRITE ME';
+    this.placeholder = 'Search or select';
     this.state = {
       inputValue: '',
       menuContents: null
@@ -77,9 +77,7 @@ class Typeahead extends React.Component {
   }
 
   handleSubmit(item){
-    console.log('submitted', item);
-    console.log(this.props);
-    this.props.getThread(item.key)
+    this.props.selectCategoryByKey(item.key);
     this.setState({
       inputValue: item.label,
       menuContents: null
@@ -93,7 +91,6 @@ export default onClickOutside(Typeahead);
 
 class TypeaheadMenu extends React.Component {
   render(){
-    // console.log('contents', this.props.contents);
     if (!this.props.contents || this.props.contents.length === 0) return null;
 
     const nested = nest()

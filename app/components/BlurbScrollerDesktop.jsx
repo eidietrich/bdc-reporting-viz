@@ -6,16 +6,18 @@ class BlurbScrollerDesktop extends React.Component {
   render(){
     const teases = this.props.stories.map(story =>{
       const isHighlight = (this.props.focusStoryKey === story.key);
+
       return <BlurbDesktop
         story={story}
         storyCategories={this.props.storyCategories}
         isHighlight={isHighlight}
         formatDate={this.props.formatDate}
         key={story.key}
-        getThread={this.props.getThread}
+        selectCategoryByKey={this.props.selectCategoryByKey}
       />
     });
-    const header = this.props.focusThread ? (<div className='blurb-scroller-header'>{this.props.focusThread}</div>) : null;
+    const curCategory = this.props.storyCategories.filter(cat => cat.key === this.props.focusThread)[0];
+    const header = this.props.focusThread ? (<div className='blurb-scroller-header'>{curCategory.label}</div>) : null;
     return (
       <div className='blurb-scroller-container'>
         <BlurbContainerMarkerDesktop />
@@ -48,7 +50,6 @@ class BlurbScrollerDesktop extends React.Component {
 
   setScrollDims(){
     this.highlightNode = document.getElementsByClassName('blurb highlight')[0];
-
     const containerHeight = this.containerNode.offsetHeight;
     const highlightBlurbHeight = this.highlightNode.offsetHeight;
 
@@ -113,7 +114,7 @@ function BlurbDesktop(props){
       const matchCategory = props.storyCategories.filter(cat => key === cat.key)[0]
       return (<span
         key={key}
-        onClick={()=> props.getThread(key)}
+        onClick={()=> props.selectCategoryByKey(key)}
         >
           {matchCategory.label}
         </span>

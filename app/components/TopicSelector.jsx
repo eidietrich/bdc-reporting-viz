@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import TypeaheadByTopic from './TypeaheadByTopic.jsx';
 import { Button, ButtonGroup, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 
-import categoryKeys from './../data/category-keys.json';
-
 class TopicSelector extends React.Component {
 
   render(){
@@ -26,10 +24,10 @@ class TopicSelector extends React.Component {
     const buttonGroup = (
       <ButtonGroup>
         <Button
-          onClick={this.props.getPrevThread}
+          onClick={this.props.selectPrevCategory}
         >&larr;</Button>
         <Button
-          onClick={this.props.getNextThread}
+          onClick={this.props.selectNextCategory}
         >&rarr;</Button>
         <Button
           onClick={this.props.resetFocus}
@@ -40,7 +38,7 @@ class TopicSelector extends React.Component {
       <TypeaheadByTopic
           options={this.makeTopicOptions()}
           focusThreadKey={this.props.focusThreadKey}
-          getThread={this.props.getThread}
+          selectCategoryByKey={this.props.selectCategoryByKey}
         />
     )
 
@@ -51,24 +49,6 @@ class TopicSelector extends React.Component {
       </div>
     );
   }
-
-  // makeCategoryHierarchy(){
-  //   var flattened = Object.keys(categoryKeys).map(i => {
-  //     return {
-  //       key: i,
-  //       display: categoryKeys[i].display,
-  //       threaded: categoryKeys[i].threaded,
-  //       type: categoryKeys[i].type
-  //     }
-  //   })
-
-  //   const nested = nest()
-  //     .key(function(d){ return d.type; })
-  //     .entries(flattened);
-
-  //   console.log('nested', nested);
-  //   return nested;
-  // }
 
   makeTopicOptions(){
     const options = this.props.storyCategories.map(cat => {
@@ -86,7 +66,7 @@ class TopicSelector extends React.Component {
     if (option === 'reset'){
       this.props.resetFocus();
     } else {
-      this.props.getThread(option);
+      this.props.selectCategoryByKey(option);
     }
   }
 

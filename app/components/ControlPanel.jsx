@@ -7,18 +7,20 @@ class ControlPanel extends React.Component {
   render(){
     return (
       <div className='control-panel'>
+
+
         <TopicSelector
           storyCategories={this.props.storyCategories}
-          getThread={this.props.getThread}
+          selectCategoryByKey={this.props.selectCategoryByKey}
           focusThreadKey={this.props.focusThreadKey}
-          getPrevThread={this.props.getPrevThread}
-          getNextThread={this.props.getNextThread}
+          selectPrevCategory={this.props.selectPrevCategory}
+          selectNextCategory={this.props.selectNextCategory}
           resetFocus={this.props.resetFocus}
         />
         <TypeaheadByHeadline
           options={this.makeHeadlineOptions()}
-          focusStoryKey={this.props.focusStoryKey}
-          getStory={this.props.getStory}
+          focusStory={this.props.focusStory}
+          selectStoryByKey={this.props.selectStoryByKey}
         />
       </div>
     )
