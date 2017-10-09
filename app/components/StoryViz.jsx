@@ -128,7 +128,7 @@ class StoryViz extends React.Component {
       <Markers
         stories={this.stories}
         focusMode={this.props.focusMode}
-        focusStoryKey={this.props.focusStoryKey}
+        focusStory={this.props.focusStory}
         focusThread={this.props.focusThread}
 
         handleMarkerClick={this.props.handleMarkerClick}

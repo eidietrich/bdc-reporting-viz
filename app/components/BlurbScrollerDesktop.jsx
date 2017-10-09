@@ -5,7 +5,7 @@ var scrollTarget = 100; //px from top of container
 class BlurbScrollerDesktop extends React.Component {
   render(){
     const teases = this.props.stories.map(story =>{
-      const isHighlight = (this.props.focusStoryKey === story.key);
+      const isHighlight = (this.props.focusStory && this.props.focusStory.key === story.key);
 
       return <BlurbDesktop
         story={story}

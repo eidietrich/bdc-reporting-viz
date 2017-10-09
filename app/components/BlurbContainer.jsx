@@ -13,26 +13,35 @@ class BlurbContainer extends React.Component {
   render(){
     const className = this.props.isMobile ? 'blurb-container mobile' : 'blurb-container desktop';
     let contents = null;
-    if (!this.props.threadStories) {
+    if (!this.props.displayStories) {
       // Case: No stories to render
       contents = <BlurbContainerDefaultContents />;
     } else if (this.props.isMobile){
       contents = <BlurbScrollerMobile
-        stories={this.props.threadStories}
+        // app data
+        stories={this.props.displayStories}
+
+        // display control
         focusThread={this.props.focusThread}
-        focusStoryKey={this.props.focusStoryKey}
+        focusStory={this.props.focusStory}
         formatDate={this.formatDate}
+
+        // interaction handlers
         getPrevStory={this.props.getPrevStory}
         getNextStory={this.props.getNextStory}
       />;
     } else {
       contents = <BlurbScrollerDesktop
+        // app data
         stories={this.props.displayStories}
         storyCategories={this.props.storyCategories}
 
+        // display control
         focusThread={this.props.focusThread}
-        focusStoryKey={this.props.focusStoryKey}
+        focusStory={this.props.focusStory}
         formatDate={this.formatDate}
+
+        // interaction handlers
         selectCategoryByKey={this.props.selectCategoryByKey}
         getPrevStory={this.props.getPrevStory}
         getNextStory={this.props.getNextStory}

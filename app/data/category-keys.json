@@ -13,7 +13,7 @@
   },
   {
     "key": "l-and-j",
-    "label": "Law & justice center push",
+    "label": "Law & Justice center",
     "isThreaded": true,
     "type": "story-arc"
   },
@@ -73,19 +73,19 @@
   },
   {
     "key": "parks-and-trails",
-    "label": "Building parks and trails",
+    "label": "Building parks",
     "isThreaded": true,
     "type": "story-arc"
   },
   {
     "key": "udc-update",
-    "label": "Updating the design code",
+    "label": "Design code update",
     "isThreaded": true,
     "type": "story-arc"
   },
   {
     "key": "bozeman-fiber",
-    "label": "Bringing businesses high-speed internet",
+    "label": "Municipal fiber",
     "isThreaded": true,
     "type": "story-arc"
   },
@@ -97,7 +97,7 @@
   },
   {
     "key": "ymca-city",
-    "label": "Why the new YMCA is outside the city",
+    "label": "YMCA building",
     "isThreaded": true,
     "type": "story-arc"
   },
@@ -109,19 +109,19 @@
   },
   {
     "key": "lark-rialto",
-    "label": "Developing the Rialto and the Lark",
+    "label": "Rialto/Lark development",
     "isThreaded": true,
     "type": "story-arc"
   },
   {
     "key": "baxter-davis",
-    "label": "Baxter and Davis signal effort",
+    "label": "Baxter/Davis eminent domain",
     "isThreaded": true,
     "type": "story-arc"
   },
   {
     "key": "bozeman-taproom",
-    "label": "Bozeman Taproom & Hawthorne school",
+    "label": "Taproom liquor license",
     "isThreaded": true,
     "type": "story-arc"
   },
@@ -139,7 +139,7 @@
   },
   {
     "key": "swmbia-impact-fees",
-    "label": "Builders criticize city impact fees",
+    "label": "Impact fee litigation",
     "isThreaded": true,
     "type": "story-arc"
   },
@@ -211,7 +211,7 @@
   },
   {
     "key": "planning-director",
-    "label": "Planning director hiring",
+    "label": "Planning director turnover",
     "isThreaded": true,
     "type": "story-arc"
   },

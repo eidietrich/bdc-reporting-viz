@@ -25,10 +25,8 @@ class App extends React.Component {
   constructor(props){
     super(props)
     this.stories = this.cleanData(stories);
-    // this.categories = this.getCategories(this.stories); // OLD
+
     this.initializeStoryCategories(categoryKeys, this.stories)
-    // this.threads = this.getThreads(this.stories);
-    // this.tags = this.getTags(this.stories);
     // this.logUniqueProperties(); // Utility function
     this.state = {
       windowWidth: window.innerWidth,
@@ -40,7 +38,6 @@ class App extends React.Component {
 
       focusThreadKey: null,
       focusThreadStories: null,
-      tooltipStory: null, // story to draw tooltip on (desktop)
     }
 
     // for event handling
@@ -72,12 +69,14 @@ class App extends React.Component {
         <h1>Two years of local reporting</h1>
         <p>Lead in text here</p>
         <ControlPanel
-          // display control
+          // app data
           stories={this.stories}
-          // threads={this.categories}
           storyCategories={this.storyCategories}
-          focusStoryKey={this.state.focusStoryKey}
+
+          // display control
+          focusStory={this.state.focusStory}
           focusThreadKey={this.state.focusThreadKey}
+
           // interaction handlers
           selectStoryByKey={this.selectStoryByKey}
           selectCategoryByKey={this.selectCategoryByKey}
@@ -90,14 +89,13 @@ class App extends React.Component {
           stories={this.stories}
           storyCategories={this.storyCategories}
 
-
           // display control
           focusMode={this.state.focusMode}
-          focusStoryKey={this.state.focusStoryKey}
           focusStory={this.state.focusStory}
           focusThread={this.state.focusThreadKey}
           threadStories={this.state.focusThreadStories}
           tooltipStory={this.state.tooltipStory}
+
           // interaction handlers
           handleMarkerClick={this.handleMarkerClick}
           handleMouseEnter={this.handleMouseEnter}
@@ -110,10 +108,7 @@ class App extends React.Component {
 
           // display control
           isMobile={this.state.isMobile}
-
           focusThread={this.state.focusThreadKey}
-          focusStoryKey={this.state.focusStoryKey}
-          threadStories={this.state.focusThreadStories}
           focusStory={this.state.focusStory}
           displayStories={this.state.focusThreadStories}
 
@@ -159,12 +154,6 @@ class App extends React.Component {
     });
     console.log('data', sorted)
     return sorted;
-  }
-  getCategories(stories){
-    // return array of series, storyThreads and tags
-    const allCategories = this.concatPropertyArrays(stories, 'categories')
-    const uniqueCategories = [...new Set(allCategories.categories)]
-    return uniqueCategories;
   }
 
   initializeStoryCategories(categoriesRaw, stories){
@@ -212,7 +201,7 @@ class App extends React.Component {
   // assume this only works on desktop!
   handleMouseEnter(story){
     if (!this.state.focusMode){
-      this.setTeaseStories([story]);
+      this.setBlurbContainerStories([story]);
       this.setFocusStory(story);
     } else if (story.categories.indexOf(this.state.focusThreadKey) >=0){
       this.setFocusStory(story);
@@ -227,7 +216,7 @@ class App extends React.Component {
   resetFocus(){
     this.setState({
       focusMode: false,
-      focusStoryKey: null,
+      // focusStoryKey: null,
       focusStory: null,
       focusThreadKey: null,
       focusThreadStories: null,
@@ -238,14 +227,13 @@ class App extends React.Component {
       tooltipStory: null,
     });
   }
-
   addTooltip(story){
     this.setState({
       tooltipStory: story
     });
   }
 
-  setTeaseStories(stories){
+  setBlurbContainerStories(stories){
     this.setState({
       focusThreadStories: stories,
     })
@@ -254,43 +242,21 @@ class App extends React.Component {
   setFocusStory(story){
     const newKey = story ? story.key : null;
     this.setState({
-      focusStory: story,
-      focusStoryKey: newKey,
+      focusStory: story
+      // focusStoryKey: newKey,
     });
   }
 
+  // Story handling
   selectStoryByKey(newStoryKey){
     const newStory = this.getStoryByKey(newStoryKey)
     this.selectStory(newStory);
   }
-  selectCategoryByKey(newCategoryKey){
-    const newCategory = this.getCategoryByKey(newCategoryKey);
-    this.selectCategory(newCategory);
-  }
-
-
   getStoryByKey(newStoryKey){
     const story = this.stories.filter((d) => {return d.key === newStoryKey})[0];
     return story; // Should only be one if keys are unique
   }
-  getCategoryByKey(newCategoryKey){
-    const category = this.storyCategories.filter((d) => {
-      return d.key === newCategoryKey
-    })[0];
-    return category;
-  }
-
-  getStoriesInCategory(threadKey){
-    // TODO: replace this with initially computed list of stories in each category
-    if (threadKey === null) return null;
-    const threadStories = this.stories.filter(story => {
-      return (story.categories.indexOf(threadKey) >= 0);
-    });
-    return threadStories;
-  }
-
   selectStory(newStory){
-    console.log(newStory);
     const newStoryKey = newStory.key;
     const newStoryCategoryKey = newStory.categories[0]; // pick first if multiple
 
@@ -300,7 +266,6 @@ class App extends React.Component {
     if (newStoryCategory && newStoryCategory.isThreaded) {
       this.setState({
         focusMode: true,
-        focusStoryKey: newStoryKey,
         focusStory: newStory,
         focusThreadKey: newStoryCategoryKey,
         focusThreadStories: newStoryCategory.stories,
@@ -309,26 +274,37 @@ class App extends React.Component {
     } else {
       this.setState({
         focusMode: true,
-        focusStoryKey: newStoryKey,
         focusStory: newStory,
         focusThreadKey: null,
         focusThreadStories: [newStory],
-        // tooltipStory: newStory,
       });
     }
+  }
+
+  // Category handling
+  selectCategoryByKey(newCategoryKey){
+    const newCategory = this.getCategoryByKey(newCategoryKey);
+    this.selectCategory(newCategory);
+  }
+  getCategoryByKey(newCategoryKey){
+    const category = this.storyCategories.filter((d) => {
+      return d.key === newCategoryKey
+    })[0];
+    return category;
   }
   selectCategory(newCategory){
     // TODO: Refine here so selecting new category doesn't change focusStory if current focusStory is part of thread
     const newFocusStory = newCategory.stories[0];
     this.setState({
       focusMode: true,
-      focusStoryKey: newFocusStory.key,
+      // focusStoryKey: newFocusStory.key,
       focusStory: newFocusStory,
       focusThreadKey: newCategory.key,
       focusThreadStories: newCategory.stories,
     })
   }
 
+  // Incremental shifts
   incrementCategoryFocus(increment){
     const length = this.storyCategories.length;
     const threadKey = this.state.focusThreadKey;
@@ -347,7 +323,7 @@ class App extends React.Component {
   incrementStoryFocus(increment){
     const stories = this.state.focusMode ? this.state.focusThreadStories : this.stories;
     const length = stories.length;
-    const storyKey = this.state.focusStoryKey;
+    const storyKey = this.state.focusStory.key;
     const keys = stories.map(d => d.key);
     const index = keys.indexOf(storyKey);
 
@@ -359,7 +335,7 @@ class App extends React.Component {
     const newStory = stories[newIndex];
 
     if (!this.state.focusMode){
-      this.setTeaseStories([newStory]);
+      this.setBlurbContainerStories([newStory]);
       this.setFocusStory(newStory);
     } else if (newStory.categories.indexOf(this.state.focusThreadKey) >=0){
       this.setFocusStory(newStory);

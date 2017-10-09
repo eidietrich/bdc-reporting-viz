@@ -4,7 +4,7 @@ class BlurbScrollerMobile extends React.Component {
   render(){
     this.scrollTarget = 120;
     const teases = this.props.stories.map(story =>{
-      const isHighlight = (this.props.focusStoryKey === story.key);
+      const isHighlight = (this.props.focusStory && this.props.focusStory.key === story.key);
       return <BlurbMobile
         story={story}
         isHighlight={isHighlight}
