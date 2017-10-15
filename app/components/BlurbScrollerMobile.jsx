@@ -7,9 +7,14 @@ class BlurbScrollerMobile extends React.Component {
       const isHighlight = (this.props.focusStory && this.props.focusStory.key === story.key);
       return <BlurbMobile
         story={story}
+        storyCategories={this.props.storyCategories}
         isHighlight={isHighlight}
         formatDate={this.props.formatDate}
         key={story.key}
+        focusCategory={this.props.focusCategory}
+
+        // interaction handling
+        selectCategoryByKey={this.props.selectCategoryByKey}
       />
     });
     return (
@@ -83,9 +88,11 @@ class BlurbScrollerMobile extends React.Component {
 
 function BlurbContainerMarkerMobile(props){
   return (
-    <div className="blurb-container-marker">
-      <svg style={{'position': 'absolute'}}>
-        <rect x={props.scrollTarget - 2} y={0} width={4} height={5}/>
+    <div className="blurb-scroller-marker">
+      <svg >
+        <g transform={'translate(' + (props.scrollTarget - 5) + ',0)'}>
+            <path d={"M0 0 l 10 10 l 10 -10"} />
+        </g>
       </svg>
     </div>
   )
@@ -94,12 +101,31 @@ function BlurbContainerMarkerMobile(props){
 function BlurbMobile(props){
   const date = props.formatDate(props.story.date);
   const className = props.isHighlight ? 'blurb mobile highlight' : 'blurb mobile';
+
+  const tags = props.story.fullCategories
+    .map(category => {
+      const matchCategory = props.storyCategories.filter(cat => category.key === cat.key)[0];
+      const catLabel = matchCategory ? matchCategory.label : null;
+      const isFocusCat = (props.focusCategory && category.key === props.focusCategory.key);
+
+      return (<span
+        key={category.key}
+        style={{color: category.tagColor}}
+        className={isFocusCat ? 'highlight' : null}
+        onClick={()=> props.selectCategoryByKey(category.key)}
+        >
+          {catLabel}
+        </span>
+      );
+    })
+    .reduce((acc, x) => acc === null ? [x] : [acc, ' ', x], null);
+
   return (
     <div className={className}>
-      <h5>{props.story.type}</h5>
       <h4><a href={props.story.link} target='_blank'>
         {props.story.title}
       </a></h4>
+      <div className="tag-container">{tags}</div>
       <h6>{`${props.story.creator} | ${date}`}</h6>
     </div>
   );

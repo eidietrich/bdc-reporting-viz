@@ -8,12 +8,12 @@ function Grid(props){
       Month of publication
     </text>
   );
-  const yAxis = (
-    <text className="axis-label"
-    transform="translate(7,84), rotate(-90)">
-      &larr; Later in month
-    </text>
-  );
+  // const yAxis = (
+  //   <text className="axis-label"
+  //   transform="translate(7,84), rotate(-90)">
+  //     &larr; Later in month
+  //   </text>
+  // );
   const topAxis = <AxisTop
     scale={props.scale}
     interval={3}
@@ -33,7 +33,7 @@ function Grid(props){
     tickClass='grid-major'/>;
 
   return (<g className="grid-container">
-      {xAxis}{yAxis}{topAxis}{minorGridLines}{majorGridLines}
+      {xAxis}{topAxis}{minorGridLines}{majorGridLines}
     </g>);
 }
 

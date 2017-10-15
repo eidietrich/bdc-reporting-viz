@@ -294,12 +294,6 @@
     "type": "tag"
   },
   {
-    "key": "housing",
-    "label": "Housing",
-    "isThreaded": false,
-    "type": "tag"
-  },
-  {
     "key": "transportation",
     "label": "Transportation",
     "isThreaded": false,

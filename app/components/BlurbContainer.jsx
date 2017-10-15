@@ -20,13 +20,16 @@ class BlurbContainer extends React.Component {
       contents = <BlurbScrollerMobile
         // app data
         stories={this.props.displayStories}
+        storyCategories={this.props.storyCategories}
 
         // display control
         focusThread={this.props.focusThread}
+        focusCategory={this.props.focusCategory}
         focusStory={this.props.focusStory}
         formatDate={this.formatDate}
 
         // interaction handlers
+        selectCategoryByKey={this.props.selectCategoryByKey}
         getPrevStory={this.props.getPrevStory}
         getNextStory={this.props.getNextStory}
       />;
@@ -38,6 +41,7 @@ class BlurbContainer extends React.Component {
 
         // display control
         focusThread={this.props.focusThread}
+        focusCategory={this.props.focusCategory}
         focusStory={this.props.focusStory}
         formatDate={this.formatDate}
 

@@ -4,6 +4,13 @@ var scrollTarget = 100; //px from top of container
 
 class BlurbScrollerDesktop extends React.Component {
   render(){
+    const focusCategoryKey = this.props.focusCategory ? this.props.focusCategory.key : null;
+    const header = this.props.focusThread ? (
+      <div className='blurb-scroller-header'>
+        {this.props.focusCategory.catLabel + ': ' + this.props.focusCategory.label}
+      </div>
+      ) : null;
+
     const teases = this.props.stories.map(story =>{
       const isHighlight = (this.props.focusStory && this.props.focusStory.key === story.key);
 
@@ -13,11 +20,13 @@ class BlurbScrollerDesktop extends React.Component {
         isHighlight={isHighlight}
         formatDate={this.props.formatDate}
         key={story.key}
+        focusCategory={this.props.focusCategory}
+
+        // interaction handler
         selectCategoryByKey={this.props.selectCategoryByKey}
       />
     });
-    const curCategory = this.props.storyCategories.filter(cat => cat.key === this.props.focusThread)[0];
-    const header = this.props.focusThread ? (<div className='blurb-scroller-header'>{curCategory.label}</div>) : null;
+
     return (
       <div className='blurb-scroller-container'>
         <BlurbContainerMarkerDesktop />
@@ -101,22 +110,19 @@ class BlurbScrollerDesktop extends React.Component {
 function BlurbDesktop(props){
   const className = props.isHighlight ? 'blurb desktop highlight' : 'blurb desktop';
   const date = props.formatDate(props.story.date);
-  // const hideImage = !(props.isHighlight && props.story.thumbnail)
-  // const hideImage = !(props.story.thumbnail)
-  // const image = hideImage ? null :
-  //   (<div className='thumbnail-container'>
-  //     <img src={props.story.thumbnail} />
-  //   </div>);
-  const image = null;
 
-  const tags = props.story.categories
-    .map(key => {
-      const matchCategory = props.storyCategories.filter(cat => key === cat.key)[0]
+  const tags = props.story.fullCategories
+    .map(category => {
+      const matchCategory = props.storyCategories.filter(cat => category.key === cat.key)[0];
+      const catLabel = matchCategory ? matchCategory.label : null;
+      const isFocusCat = (props.focusCategory && category.key === props.focusCategory.key);
       return (<span
-        key={key}
-        onClick={()=> props.selectCategoryByKey(key)}
+        key={category.key}
+        style={{color: category.tagColor}}
+        className={isFocusCat ? 'highlight' : null}
+        onClick={()=> props.selectCategoryByKey(category.key)}
         >
-          {matchCategory.label}
+          {catLabel}
         </span>
       );
     })
@@ -124,12 +130,13 @@ function BlurbDesktop(props){
 
   return (
     <div className={className}>
-      <h5>{props.story.type}</h5>
-      {image}
+      <h5 style={{color: props.story.color}}>
+        {props.story.type}
+      </h5>
       <h4><a href={props.story.link} target='_blank'>
         {props.story.title}
       </a></h4>
-      <p className="tag-container">{tags}</p>
+      <div className="tag-container">{tags}</div>
       <h6>{`${props.story.creator} | ${date}`}</h6>
     </div>
   );
@@ -137,12 +144,16 @@ function BlurbDesktop(props){
 
 function BlurbContainerMarkerDesktop(props){
   return (
-    <div className="blurb-container-marker">
-      <svg style={{'position': 'absolute'}}>
-        <rect x={0} y={scrollTarget - 2} width={10} height={4}/>
+    <div className="blurb-scroller-marker">
+      <svg>
+        <g transform={'translate(0,' + (scrollTarget - 5) + ')'}>
+            <path d={"M0 0 l 10 10 l -10 10"} />
+        </g>
       </svg>
     </div>
   )
 }
+
+
 
 export default BlurbScrollerDesktop;

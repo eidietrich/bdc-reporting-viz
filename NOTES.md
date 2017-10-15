@@ -3,27 +3,21 @@
 Oct. 3 2017
 Getting back into this TODO
 - BlurbContainer spec behavior:
-    + Default contents TBD (color/size key?)
-    + Display theme key before blurbs on mobile
+    + On default display all stories
 - Fine-tune CSS/styling
     + Better colors
-    + Nicer design for ticker shape
 - Figure out/write new intro framing 
 - Push to github pages, pass around for UI testing
-- On tag select, keep memory of focus node
+- Highlight focus tag
 - Multiple columns for highlight topic typeahead menu
-- Include #s of nodes in highlight topic typeahead menu, sort by #
+- Finish refactoring CSS
+- adjust scrollhandling so it works for long scrolls (repeating until scrollCondition isn't met)
 
 Data cleaning to-dos
-- Food trucks missing early pieces (attached to vacation rentals?)
-- Cost-of-living missing first-annual beer index story
-- ID blog posts/midform/features
-- Tighten housing plan narrative
-- Add Kagy to spending-on-streets?
-- Add 'with dataviz?' tag?
+- Tighten housing plan narrative?
 - Does cost-of-living fit in somewhere else?
-- Is the walkability graphic in there?
-- Housing tag is redundant
+- Growth-and-change is too much of a catch all
+- Add missing tags
 
 Jul 1 2017
 

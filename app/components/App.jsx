@@ -13,29 +13,44 @@ function parseDate(dateString){
   return new Date(dateString);
 }
 
-var markStyle = {
-  web: { radius: 9, color: '#7570b3'},
-  blog: { radius: 5, color: '#7570b3'},
-  news: { radius: 7, color: '#a6761d'},
-  midform: { radius: 10, color: '#d95f02'},
-  feature: { radius: 13, color: '#e6ab02'},
+// var markStyle = {
+//   blog: { radius: 5, color: '#7570b3'},
+//   news: { radius: 7, color: '#a6761d'},
+//   midform: { radius: 10, color: '#d95f02'},
+//   feature: { radius: 13, color: '#e6ab02'},
+// }
+
+const markStyle = {
+  blog: { radius: 5, color: '#993404'},
+  news: { radius: 7, color: '#0868ac'},
+  midform: { radius: 10, color: '#e6ab02'},
+  feature: { radius: 13, color: '#d95f0e'},
 }
+
+const catStyle = {
+  'series': { label: 'Series', tagColor: 'red'},
+  'story-arc': { label: 'Storyline', 'tagColor': 'blue'},
+  'tag' : {label: 'Topic', 'tagColor': 'green'}
+}
+const catOrder = ['series','story-arc','tag']
 
 class App extends React.Component {
   constructor(props){
     super(props)
-    this.stories = this.cleanData(stories);
-
+    this.cleanStoryData(stories);
     this.initializeStoryCategories(categoryKeys, this.stories)
+    this.assignCategoriesToStories();
     this.state = {
       windowWidth: window.innerWidth,
       windowHeight: window.innerHeight,
       isMobile: null,
       focusMode: false, // true if story/thread is selected
       focusStory: null,
-      focusThreadKey: null,
+      focusThreadKey: null, // TODO: replace this with focusCategory
+      focusCategory: null,
       focusThreadStories: null,
     }
+
 
     // for event handling
     this.handleMarkerClick = this.handleMarkerClick.bind(this);
@@ -55,7 +70,6 @@ class App extends React.Component {
 
   render(){
     // console.log(this.state);
-
     return (
       <div className="container">
         <h1>Two years of local reporting</h1>
@@ -84,7 +98,7 @@ class App extends React.Component {
           // display control
           focusMode={this.state.focusMode}
           focusStory={this.state.focusStory}
-          focusThread={this.state.focusThreadKey}
+          focusThreadKey={this.state.focusThreadKey}
           threadStories={this.state.focusThreadStories}
           tooltipStory={this.state.tooltipStory}
 
@@ -101,6 +115,7 @@ class App extends React.Component {
           // display control
           isMobile={this.state.isMobile}
           focusThread={this.state.focusThreadKey}
+          focusCategory={this.state.focusCategory}
           focusStory={this.state.focusStory}
           displayStories={this.state.focusThreadStories}
 
@@ -113,8 +128,8 @@ class App extends React.Component {
     )
   }
   // DATA INITIALIZATION
-  cleanData(rawData){
-    const cleaned = rawData.map(function(row, i){
+  cleanStoryData(rawData){
+    const cleaned = rawData.map((row, i) => {
       let object = {};
       object.key = String(i);
       // object.category = row.category;
@@ -144,20 +159,22 @@ class App extends React.Component {
     const sorted = cleaned.sort(function(a,b){
       return a.date - b.date;
     });
-    console.log('data', sorted)
-    return sorted;
+
+    this.stories = sorted;
+    console.log('stories', this.stories);
   }
 
   initializeStoryCategories(categoriesRaw, stories){
     // expects categories as a flat json
 
     // TODO: Add code that checks to see whether stories have missing categories
-
     this.storyCategories = categoriesRaw.map(row => {
       // pre-populate list of stories matching, length variable
       const matchingStories = this.stories.filter(story => {
         return story.categories.indexOf(row.key) >= 0;
       })
+
+      const style = catStyle[row.type];
 
       const object = {
         key: row.key,
@@ -165,23 +182,34 @@ class App extends React.Component {
         isThreaded: row.isThreaded,
         type: row.type,
         stories: matchingStories,
-        numStories: matchingStories.length
+        numStories: matchingStories.length,
+        // styling
+        catLabel: style.label,
+        tagColor: style.tagColor
       }
       return object;
     })
 
     // sort by numb stories descending, then type
-    const refArray = ['series','story-arc','tag']
-    // TODO - avoid hardcoding this here
     this.storyCategories.sort((a,b) => {
       if (a.type === b.type){
         return b.numStories - a.numStories;
       } else {
-        return refArray.indexOf(a.type) - refArray.indexOf(b.type);
+        return catOrder.indexOf(a.type) - catOrder.indexOf(b.type);
       }
     })
 
     console.log('categories', this.storyCategories);
+  }
+  assignCategoriesToStories(){
+    // links category objects to story properties
+    // needs to be a separate object because circular data ref
+    const categories = this.storyCategories;
+    this.stories.forEach(d => {
+      d.fullCategories = d.categories
+        .filter(i => i !== "")
+        .map(i => this.getCategoryByKey(i, categories));
+    });
   }
 
   // INTERACTIVITY HANDLING - EVENT LISTENERS
@@ -211,6 +239,7 @@ class App extends React.Component {
       // focusStoryKey: null,
       focusStory: null,
       focusThreadKey: null,
+      focusCategory: null,
       focusThreadStories: null,
     });
   }
@@ -254,46 +283,41 @@ class App extends React.Component {
 
     // TODO: Break this out as a utility function, pass down to objects that need it
     const newStoryCategory = this.storyCategories.filter(cat => cat.key === newStoryCategoryKey)[0];
+    const isThreaded = (newStoryCategory && newStoryCategory.isThreaded);
 
-    if (newStoryCategory && newStoryCategory.isThreaded) {
-      this.setState({
-        focusMode: true,
-        focusStory: newStory,
-        focusThreadKey: newStoryCategoryKey,
-        focusThreadStories: newStoryCategory.stories,
-        // tooltipStory: newStory,
-      });
-    } else {
-      this.setState({
-        focusMode: true,
-        focusStory: newStory,
-        focusThreadKey: null,
-        focusThreadStories: [newStory],
-      });
-    }
+    this.setState({
+      focusMode: true,
+      focusStory: newStory,
+      focusThreadKey: isThreaded ? newStoryCategoryKey : null,
+      focusCategory: isThreaded ? newStoryCategory : null,
+      focusThreadStories: isThreaded ? newStoryCategory.stories : [newStory]
+    });
   }
 
   // Category handling
   selectCategoryByKey(newCategoryKey){
-    const newCategory = this.getCategoryByKey(newCategoryKey);
+    const newCategory = this.getCategoryByKey(newCategoryKey, this.storyCategories);
     this.selectCategory(newCategory);
   }
-  getCategoryByKey(newCategoryKey){
-    const category = this.storyCategories.filter((d) => {
+  getCategoryByKey(newCategoryKey, categories){
+    const category = categories.filter((d) => {
       return d.key === newCategoryKey
     })[0];
     return category;
   }
   selectCategory(newCategory){
-    // TODO: Refine here so selecting new category doesn't change focusStory if current focusStory is part of thread
-    const newFocusStory = newCategory.stories[0];
-    this.setState({
+    const newState = {
       focusMode: true,
-      // focusStoryKey: newFocusStory.key,
-      focusStory: newFocusStory,
       focusThreadKey: newCategory.key,
+      focusCategory: newCategory,
       focusThreadStories: newCategory.stories,
-    })
+    }
+    const curStoryInNewCategory = (this.state.focusStory && this.state.focusStory.categories.indexOf(newCategory.key) >= 0);
+
+    if (!curStoryInNewCategory) {
+      newState.focusStory = newCategory.stories[0];
+    }
+    this.setState(newState);
   }
 
   // Incremental shifts
