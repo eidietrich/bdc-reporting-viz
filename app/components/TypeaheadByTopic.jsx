@@ -108,24 +108,13 @@ class TypeaheadMenu extends React.Component {
         </a>
       </li>);
       })
-
       return (
         <div key={category.key}>
-          <h5>{category.key}</h5>
+          <h5>{category.values[0].catLabel}</h5>
           {items}
         </div>
       )
     });
-
-    // const items = this.props.contents.map((item, i) => {
-    //  return ( <li key={item.key}>
-    //     <a onClick={() => this.props.handleSubmit(item)}>
-    //       <span className='dropdown-num'>{(i+1) + '. '}</span>
-    //       {item.label}
-    //     </a>
-    //   </li>);
-    // });
-    // console.log(items);
 
     // style display: block; overrides default hiding of menu items
     return (

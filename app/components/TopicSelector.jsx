@@ -56,6 +56,7 @@ class TopicSelector extends React.Component {
         key: cat.key,
         label: cat.label,
         type: cat.type,
+        catLabel: cat.catLabel,
         numStories: cat.numStories,
       }
     })

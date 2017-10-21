@@ -2,16 +2,14 @@
 
 Oct. 3 2017
 Getting back into this TODO
-- BlurbContainer spec behavior:
-    + On default display all stories
 - Fine-tune CSS/styling
     + Better colors
 - Figure out/write new intro framing 
 - Push to github pages, pass around for UI testing
-- Highlight focus tag
 - Multiple columns for highlight topic typeahead menu
 - Finish refactoring CSS
 - adjust scrollhandling so it works for long scrolls (repeating until scrollCondition isn't met)
+- Address mouseover lag
 
 Data cleaning to-dos
 - Tighten housing plan narrative?

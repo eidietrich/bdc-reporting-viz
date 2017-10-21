@@ -45,10 +45,10 @@ class App extends React.Component {
       windowHeight: window.innerHeight,
       isMobile: null,
       focusMode: false, // true if story/thread is selected
-      focusStory: null,
+      focusStory: this.stories[0],
       focusThreadKey: null, // TODO: replace this with focusCategory
       focusCategory: null,
-      focusThreadStories: null,
+      focusThreadStories: this.stories,
     }
 
 
@@ -69,7 +69,6 @@ class App extends React.Component {
   }
 
   render(){
-    // console.log(this.state);
     return (
       <div className="container">
         <h1>Two years of local reporting</h1>
@@ -117,7 +116,7 @@ class App extends React.Component {
           focusThread={this.state.focusThreadKey}
           focusCategory={this.state.focusCategory}
           focusStory={this.state.focusStory}
-          displayStories={this.state.focusThreadStories}
+          displayStories={this.state.focusThreadStories || this.stories}
 
           // interaction handlers
           selectCategoryByKey={this.selectCategoryByKey}
@@ -221,7 +220,6 @@ class App extends React.Component {
   // assume this only works on desktop!
   handleMouseEnter(story){
     if (!this.state.focusMode){
-      this.setBlurbContainerStories([story]);
       this.setFocusStory(story);
     } else if (story.categories.indexOf(this.state.focusThreadKey) >=0){
       this.setFocusStory(story);
@@ -237,10 +235,10 @@ class App extends React.Component {
     this.setState({
       focusMode: false,
       // focusStoryKey: null,
-      focusStory: null,
+      focusStory: this.stories[0],
       focusThreadKey: null,
       focusCategory: null,
-      focusThreadStories: null,
+      focusThreadStories: this.stories,
     });
   }
   resetTooltip(){
@@ -351,7 +349,7 @@ class App extends React.Component {
     const newStory = stories[newIndex];
 
     if (!this.state.focusMode){
-      this.setBlurbContainerStories([newStory]);
+      // this.setBlurbContainerStories([newStory]);
       this.setFocusStory(newStory);
     } else if (newStory.categories.indexOf(this.state.focusThreadKey) >=0){
       this.setFocusStory(newStory);

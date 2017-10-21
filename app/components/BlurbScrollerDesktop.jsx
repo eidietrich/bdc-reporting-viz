@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-var scrollTarget = 100; //px from top of container
+var scrollTarget = 150; //px from top of container
 
 class BlurbScrollerDesktop extends React.Component {
   render(){
@@ -145,7 +145,7 @@ function BlurbDesktop(props){
 function BlurbContainerMarkerDesktop(props){
   return (
     <div className="blurb-scroller-marker">
-      <svg>
+      <svg width="10" height={scrollTarget + 20}>
         <g transform={'translate(0,' + (scrollTarget - 5) + ')'}>
             <path d={"M0 0 l 10 10 l -10 10"} />
         </g>

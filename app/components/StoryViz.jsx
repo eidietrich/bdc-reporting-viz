@@ -90,7 +90,7 @@ class StoryViz extends React.Component {
     const connectors = category && category.isThreaded ? <Connectors stories={this.props.threadStories}/> : null;
 
     const storiesSorted = {
-      normal: this.props.stories.filter(() => !this.props.focusMode),
+      normal: this.getNormalStories(),
       primeHighlight: this.getPrimeStories(),
       highlight: this.getHighlightStories(),
       faded: this.getFadedStories(),
@@ -153,9 +153,15 @@ class StoryViz extends React.Component {
     );
     return svg;
   }
+  getNormalStories(){
+    return this.props.stories.filter((d) =>{
+      return (!this.props.focusMode) &&
+        (d.key !== this.props.focusStory.key);
+    });
+  }
 
   getPrimeStories(){
-    if (!this.props.focusMode) return [];
+    // if (!this.props.focusMode) return [];
     const primeStories = this.props.stories.filter(d => {
       return d.key === this.props.focusStory.key
     });

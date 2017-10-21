@@ -13,6 +13,8 @@ class ControlPanel extends React.Component {
           storyCategories={this.props.storyCategories}
           selectCategoryByKey={this.props.selectCategoryByKey}
           focusThreadKey={this.props.focusThreadKey}
+
+          // Interaction
           selectPrevCategory={this.props.selectPrevCategory}
           selectNextCategory={this.props.selectNextCategory}
           resetFocus={this.props.resetFocus}
@@ -20,6 +22,8 @@ class ControlPanel extends React.Component {
         <TypeaheadByHeadline
           options={this.makeHeadlineOptions()}
           focusStory={this.props.focusStory}
+
+          // Interaction
           selectStoryByKey={this.props.selectStoryByKey}
         />
       </div>
