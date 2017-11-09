@@ -1,12 +1,13 @@
 {
-  "name": "webpack-tut-3",
+  "name": "bdc-reporting-viz",
   "version": "1.0.0",
   "description": "From https://medium.com/@wesharehoodies/easy-guide-for-webpack-2-0-from-scratch-fe508a3ce44e",
   "main": "index.js",
   "scripts": {
     "build": "webpack",
     "start": "webpack-dev-server -d --hot --config webpack.config.js --watch",
-    "production": "NODE_ENV=production webpack"
+    "production": "NODE_ENV=production webpack",
+    "deploy": "webpack && git subtree push --prefix build origin gh-pages"
   },
   "keywords": [],
   "author": "",
