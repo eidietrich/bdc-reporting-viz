@@ -4,7 +4,7 @@ import { timeMonth } from 'd3';
 
 function Grid(props){
   const xAxis = (
-    <text className="axis-label" transform="translate(0,-25)">
+    <text className="axis-label" transform="translate(-12,-25)">
       Month of publication
     </text>
   );

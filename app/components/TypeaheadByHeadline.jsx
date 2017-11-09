@@ -31,6 +31,8 @@ class TypeaheadByHeadline extends React.Component {
           value={this.state.inputValue}
           handleInput={this.handleInput}
           onFocus={this.onFocus}
+          onBlur={() => console.log('b')}
+          onFocusOut={() => console.log('fo')}
         />
         <TypeaheadMenu
           contents={this.state.menuContents}
@@ -40,12 +42,16 @@ class TypeaheadByHeadline extends React.Component {
     )
   }
 
-  handleClickOutside() {
-    // see https://www.npmjs.com/package/react-onclickoutside
+  reset(){
     this.setState({
       inputValue: '',
       menuContents: null
     });
+  }
+
+  handleClickOutside() {
+    // see https://www.npmjs.com/package/react-onclickoutside
+    this.reset();
   }
 
   onFocus(){

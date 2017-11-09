@@ -23,7 +23,7 @@ function AxisTop(props){
   });
   let tickLabels = ticks.map((tick, i) => {
     const x = props.scale(tick);
-    const label = timeFormat('%b%y')(tick);
+    const label = timeFormat("%b '%15")(tick);
     return (<text textAnchor='middle' className='axis-label'
       key={String(i)}
       x={x} y={-tickLength - 3} fill='black'>

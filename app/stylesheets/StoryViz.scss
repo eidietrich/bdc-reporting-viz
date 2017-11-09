@@ -1,0 +1,97 @@
+/* StoryViz */
+.viz-container {
+  border: 1px solid #bbb;
+  background-color: #eee;
+  height: 300px;
+  box-shadow: 0 1px 1px rgba(0,0,0,.075);
+
+  @media (min-width: $break-point){
+    float: left;
+    width: 60%;
+    height: 500px;
+  }
+  @media (max-width: $break-point){
+    margin-bottom: 10px;
+  }
+
+  .axis-label {
+    font-size: 10px;
+    /*font-style: italic;*/
+  }
+
+  // .grid-line line {
+  //   stroke: #bbb;
+  // }
+
+  /* Viz gridlines */
+  .grid-minor {
+    stroke: #ddd;
+    stroke-width: 1px;
+  }
+  .grid-major {
+    stroke: #ddd;
+    stroke-width: 2px;
+  }
+  .marker {
+    /* Color from JS */
+    opacity: 1.0;
+    // cursor: pointer;
+    stroke-width: 1px;
+    // stroke: #fff;
+    cursor: pointer;
+    // &.no-focus {
+    //   &:hover{
+    //     stroke: #000;
+    //     stroke-width: 2px;
+    //   }
+    // }
+
+
+    &.secondary {
+      // fill: $secondary-marker-color;
+    }
+
+    &.fadeout {
+      opacity: 0.8;
+      fill: #aaa;
+      // stroke: #bbb;
+      stroke-width: 1px;
+
+      &:hover{
+        fill: #ddd;
+      }
+
+      // transform: scale(0.8,1);
+    }
+
+    &.highlight {
+      // stroke: black;
+      // stroke-width: 1;
+      opacity: 1;
+    }
+
+    &.prime-highlight {
+      stroke: black;
+      stroke-width: 2;
+      // fill: #fff;
+      opacity: 1;
+    }
+  }
+  .marker-shadow {
+    fill: #666;
+    opacity: 0.4;
+
+  }
+
+  .story-thread {
+    stroke: #444;
+    stroke-width: 3;
+    fill: none;
+    stroke-linecap: round;
+
+    /* Mobile */
+    @media (max-width: $break-point){
+      stroke-width: 2;
+    }
+  }
+}

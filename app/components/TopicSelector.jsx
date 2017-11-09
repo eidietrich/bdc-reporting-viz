@@ -25,13 +25,13 @@ class TopicSelector extends React.Component {
       <ButtonGroup>
         <Button
           onClick={this.props.selectPrevCategory}
-        >&larr;</Button>
+        >&larr; Last</Button>
         <Button
           onClick={this.props.selectNextCategory}
-        >&rarr;</Button>
+        >&rarr; Next</Button>
         <Button
           onClick={this.props.resetFocus}
-        >&#8634;</Button>
+        >&#8634; Reset</Button>
       </ButtonGroup>
     );
     const typeahead = (

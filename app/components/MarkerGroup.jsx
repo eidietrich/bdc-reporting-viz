@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Marker from './Marker.jsx';
 
-class Markers extends React.Component {
+class MarkerGroup extends React.Component {
 
   render(){
     const markers = this.props.stories.map((d) => {
@@ -30,4 +30,4 @@ class Markers extends React.Component {
 
 }
 
-export default Markers;
+export default MarkerGroup;

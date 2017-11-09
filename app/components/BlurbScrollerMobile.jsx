@@ -110,7 +110,7 @@ function BlurbMobile(props){
 
       return (<span
         key={category.key}
-        style={{color: category.tagColor}}
+        // style={{color: category.tagColor}}
         className={isFocusCat ? 'highlight' : null}
         onClick={()=> props.selectCategoryByKey(category.key)}
         >
@@ -121,12 +121,12 @@ function BlurbMobile(props){
     .reduce((acc, x) => acc === null ? [x] : [acc, ' ', x], null);
 
   return (
-    <div className={className}>
+    <div className={className} style={{'backgroundColor': props.story.color}}>
       <h4><a href={props.story.link} target='_blank'>
         {props.story.title}
       </a></h4>
       <div className="tag-container">{tags}</div>
-      <h6>{`${props.story.creator} | ${date}`}</h6>
+      <div className="blurb-details">{`${props.story.creator} | ${date}`}</div>
     </div>
   );
 }

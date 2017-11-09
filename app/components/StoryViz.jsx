@@ -10,6 +10,7 @@ import Connectors from './Connectors.jsx';
 import MarkerGroup from './MarkerGroup.jsx';
 
 /* Interactivity behavior
+(THIS IS OLD, I think)
 
 Three key aspects of state (passed down from App):
 - in focus mode (props.focusMode, true/false)
@@ -24,9 +25,6 @@ Three key aspects of state (passed down from App):
 
 
 */
-
-const fill = '#a6761d'
-const background = '#cccccc'
 
 class StoryViz extends React.Component {
   constructor(props){
@@ -49,7 +47,6 @@ class StoryViz extends React.Component {
       this.setDimensions(width, height);
       this.stories = this.layout(this.props.stories);
       const svg = this.buildSvg();
-      // const tooltip = this.buildTooltip();
       return <div>{svg}</div>;
     }
 
@@ -71,9 +68,9 @@ class StoryViz extends React.Component {
     this.plotHeight = this.height - this.margin.top - this.margin.bottom;
 
     // Calc marker width
-    const markerMargin = 3;
+    const markerMargin = 4;
     const bins = timeMonths(this.startDate, this.endDate).length;
-    this.markerWidth = Math.floor(this.plotWidth / bins) - markerMargin;
+    this.markerWidth = this.plotWidth / bins - markerMargin;
 
     // pin dateScale to plot dims
     this.dateScale.range([0, this.plotWidth]);
@@ -81,7 +78,7 @@ class StoryViz extends React.Component {
   }
 
   buildSvg(){
-    const plotTranslate = `translate(${this.margin.left},${this.margin.top})`;
+    const plotTransform = `translate(${this.margin.left},${this.margin.top})`;
 
     const category = this.props.storyCategories.filter(cat => cat.key === this.props.focusThreadKey)[0];
 
@@ -133,7 +130,6 @@ class StoryViz extends React.Component {
         stories={storiesSorted.faded}
         markerClass='marker fadeout'
 
-
         handleMarkerClick={this.props.handleMarkerClick}
         handleMouseEnter={this.props.handleMouseEnter}
         handleMouseLeave={this.props.handleMouseLeave}
@@ -142,7 +138,7 @@ class StoryViz extends React.Component {
 
     const svg = (
       <svg width={this.width} height={this.height} >
-        <g className="plot" transform={plotTranslate}>
+        <g className="plot" transform={plotTransform}>
           {grid}
           {faded}
           {connectors}
@@ -190,12 +186,13 @@ class StoryViz extends React.Component {
   }
 
   layout(stories){
-    const that = this;
     // add stories.x, stories.y
+    // Possible optimization: skip this if dims haven't changed
 
-    const spacing = 2; // px
-    let heightCounter = {}
+    const spacing = 4; // px
+    const heightCounter = {}
 
+    let heightMax = 0;
     stories.forEach((d) => {
       d.markerWidth = this.markerWidth;
       d.month = timeMonth(d.date);
@@ -207,28 +204,45 @@ class StoryViz extends React.Component {
       }
       d.y = heightCounter[key];
       heightCounter[key] += (d.radius*2 + spacing);
+      if (heightMax < heightCounter[key]) heightMax = heightCounter[key];
     });
 
-    // Scale to plot height
-    const months = Object.keys(heightCounter)
-    const heights = months.map((key) => heightCounter[key])
-    const heightMax = Math.max.apply(null, heights);
-    const heightScale = scaleLinear()
-      .domain([0, heightMax])
-      .range([0, this.plotHeight]);
-    stories.forEach((d) => {
-      d.y = heightScale(d.y);
+    // scale y if needed
+    if (heightMax > this.plotHeight){
+      const heightScale = scaleLinear()
+        .domain([0, heightMax])
+        .range([0, this.plotHeight]);
+
+      stories.forEach((d) => {
+        d.y = heightScale(d.y);
       d.radius = heightScale(d.radius);
-    });
+      })
+    }
 
-    // Shift down to center (hacky)
-    months.forEach((key) => {
-      const height = heightCounter[key];
-      const yShift = heightScale(heightMax - height) / 2;
-      stories
-        .filter(d => timeFormat('%-b%-Y')(d.month) === key)
-        .forEach(d => d.y += yShift);
-    });
+    // // Scale to plot height
+
+    // const heights = months.map((key) => heightCounter[key])
+    // const heightMax = Math.max.apply(null, heights);
+    // console.log('dims', heightMax, this.plotHeight);
+    // // BUG: heightMax changes every time this runs (shrinks)
+    // const heightScale = scaleLinear()
+    //   .domain([0, heightMax])
+    //   .range([0, this.plotHeight]);
+    // stories.forEach((d) => {
+    //   d.y = heightScale(d.y);
+    //   d.radius = heightScale(d.radius);
+    // });
+    // console.log('hs test', heightScale(10));
+
+    // // Shift down to center (hacky)
+    // const months = Object.keys(heightCounter)
+    // months.forEach((key) => {
+    //   const height = heightCounter[key];
+    //   const yShift = heightScale(heightMax - height) / 2;
+    //   stories
+    //     .filter(d => timeFormat('%-b%-Y')(d.month) === key)
+    //     .forEach(d => d.y += yShift);
+    // });
     return stories;
   }
 }

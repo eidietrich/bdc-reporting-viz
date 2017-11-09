@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { nest } from 'd3'
 
+import LedeIn from './LedeIn.jsx';
+import Analysis from './Analysis.jsx';
+
 import ControlPanel from './ControlPanel.jsx';
 import StoryViz from './StoryViz.jsx';
 import BlurbContainer from './BlurbContainer.jsx';
@@ -23,14 +26,14 @@ function parseDate(dateString){
 const markStyle = {
   blog: { radius: 5, color: '#993404'},
   news: { radius: 7, color: '#0868ac'},
-  midform: { radius: 10, color: '#e6ab02'},
-  feature: { radius: 13, color: '#d95f0e'},
+  midform: { radius: 10, color: '#d95f0e'},
+  feature: { radius: 13, color: '#e6ab02'},
 }
 
 const catStyle = {
-  'series': { label: 'Series', tagColor: 'red'},
-  'story-arc': { label: 'Storyline', 'tagColor': 'blue'},
-  'tag' : {label: 'Topic', 'tagColor': 'green'}
+  'series': { label: 'Series', tagColor: '#333'},
+  'story-arc': { label: 'Storyline', 'tagColor': '#333'},
+  'tag' : {label: 'Topic', 'tagColor': '#333'}
 }
 const catOrder = ['series','story-arc','tag']
 
@@ -71,57 +74,68 @@ class App extends React.Component {
   render(){
     return (
       <div className="container">
-        <h1>Two years of local reporting</h1>
-        <p>Lead in text here</p>
-        <ControlPanel
-          // app data
-          stories={this.stories}
-          storyCategories={this.storyCategories}
+        <div className="headline">
+          <h1>Visualized: Two years of local news</h1>
+        </div>
+        <LedeIn markStyle={markStyle}/>
+        <hr />
+        <div className="app-container" >
+          <ControlPanel
+            // app data
+            stories={this.stories}
+            storyCategories={this.storyCategories}
 
-          // display control
-          focusStory={this.state.focusStory}
-          focusThreadKey={this.state.focusThreadKey}
+            // display control
+            focusStory={this.state.focusStory}
+            focusThreadKey={this.state.focusThreadKey}
 
-          // interaction handlers
+            // interaction handlers
+            selectStoryByKey={this.selectStoryByKey}
+            selectCategoryByKey={this.selectCategoryByKey}
+            selectPrevCategory={() => this.incrementCategoryFocus(-1)}
+            selectNextCategory={() => this.incrementCategoryFocus(1)}
+            resetFocus={this.resetFocus}
+          />
+          <StoryViz
+            // app data
+            stories={this.stories}
+            storyCategories={this.storyCategories}
+
+            // display control
+            focusMode={this.state.focusMode}
+            focusStory={this.state.focusStory}
+            focusThreadKey={this.state.focusThreadKey}
+            threadStories={this.state.focusThreadStories}
+            tooltipStory={this.state.tooltipStory}
+
+            // interaction handlers
+            handleMarkerClick={this.handleMarkerClick}
+            handleMouseEnter={this.handleMouseEnter}
+            handleMouseLeave={this.handleMouseLeave}
+            handleReset={this.resetFocus}
+            />
+          <BlurbContainer
+            // app data
+            storyCategories={this.storyCategories}
+
+            // display control
+            isMobile={this.state.isMobile}
+            focusThread={this.state.focusThreadKey}
+            focusCategory={this.state.focusCategory}
+            focusStory={this.state.focusStory}
+            displayStories={this.state.focusThreadStories || this.stories}
+
+            // interaction handlers
+            selectCategoryByKey={this.selectCategoryByKey}
+            getPrevStory={() => this.incrementStoryFocus(-1)}
+            getNextStory={() => this.incrementStoryFocus(1)}
+          />
+        </div>
+        <hr />
+        <Analysis
+          markStyle={markStyle}
           selectStoryByKey={this.selectStoryByKey}
           selectCategoryByKey={this.selectCategoryByKey}
-          selectPrevCategory={() => this.incrementCategoryFocus(-1)}
-          selectNextCategory={() => this.incrementCategoryFocus(1)}
-          resetFocus={this.resetFocus}
-        />
-        <StoryViz
-          // app data
-          stories={this.stories}
-          storyCategories={this.storyCategories}
-
-          // display control
-          focusMode={this.state.focusMode}
-          focusStory={this.state.focusStory}
-          focusThreadKey={this.state.focusThreadKey}
-          threadStories={this.state.focusThreadStories}
-          tooltipStory={this.state.tooltipStory}
-
-          // interaction handlers
-          handleMarkerClick={this.handleMarkerClick}
-          handleMouseEnter={this.handleMouseEnter}
-          handleMouseLeave={this.handleMouseLeave}
-          handleReset={this.resetFocus}
-          />
-        <BlurbContainer
-          // app data
-          storyCategories={this.storyCategories}
-
-          // display control
-          isMobile={this.state.isMobile}
-          focusThread={this.state.focusThreadKey}
-          focusCategory={this.state.focusCategory}
-          focusStory={this.state.focusStory}
-          displayStories={this.state.focusThreadStories || this.stories}
-
-          // interaction handlers
-          selectCategoryByKey={this.selectCategoryByKey}
-          getPrevStory={() => this.incrementStoryFocus(-1)}
-          getNextStory={() => this.incrementStoryFocus(1)}
         />
       </div>
     )
@@ -269,6 +283,7 @@ class App extends React.Component {
   // Story handling
   selectStoryByKey(newStoryKey){
     const newStory = this.getStoryByKey(newStoryKey)
+    console.log(newStoryKey, newStory);
     this.selectStory(newStory);
   }
   getStoryByKey(newStoryKey){

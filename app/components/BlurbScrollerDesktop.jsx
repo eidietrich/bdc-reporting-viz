@@ -107,39 +107,102 @@ class BlurbScrollerDesktop extends React.Component {
   }
 }
 
-function BlurbDesktop(props){
-  const className = props.isHighlight ? 'blurb desktop highlight' : 'blurb desktop';
-  const date = props.formatDate(props.story.date);
+// class Marker extends React.PureComponent {
+//   render(){
+//     const props = this.props;
+//     const className = props.isHighlight ? 'blurb desktop highlight' : 'blurb desktop';
+//     const date = props.formatDate(props.story.date);
 
-  const tags = props.story.fullCategories
-    .map(category => {
-      const matchCategory = props.storyCategories.filter(cat => category.key === cat.key)[0];
-      const catLabel = matchCategory ? matchCategory.label : null;
-      const isFocusCat = (props.focusCategory && category.key === props.focusCategory.key);
-      return (<span
-        key={category.key}
-        style={{color: category.tagColor}}
-        className={isFocusCat ? 'highlight' : null}
-        onClick={()=> props.selectCategoryByKey(category.key)}
-        >
-          {catLabel}
-        </span>
-      );
-    })
-    .reduce((acc, x) => acc === null ? [x] : [acc, ' ', x], null);
+//     const tags = props.story.fullCategories
+//       .map(category => {
+//         const matchCategory = props.storyCategories.filter(cat => category.key === cat.key)[0];
+//         const catLabel = matchCategory ? matchCategory.label : null;
+//         const isFocusCat = (props.focusCategory && category.key === props.focusCategory.key);
+//         return (<span
+//           key={category.key}
+//           style={{color: category.tagColor}}
+//           className={isFocusCat ? 'highlight' : null}
+//           onClick={()=> props.selectCategoryByKey(category.key)}
+//           >
+//             {catLabel}
+//           </span>
+//         );
+//       })
+//       .reduce((acc, x) => acc === null ? [x] : [acc, ' ', x], null);
 
-  return (
-    <div className={className}>
-      <h5 style={{color: props.story.color}}>
-        {props.story.type}
-      </h5>
-      <h4><a href={props.story.link} target='_blank'>
-        {props.story.title}
-      </a></h4>
-      <div className="tag-container">{tags}</div>
-      <h6>{`${props.story.creator} | ${date}`}</h6>
-    </div>
-  );
+//     return (
+//       <div className={className}>
+//         <h5 style={{color: "#666"}}>
+//           {props.story.type}
+//         </h5>
+//         <h4><a
+//           href={props.story.link}
+//           target='_blank'
+//           style={{color: props.story.color}}
+//           >
+//           {props.story.title}
+//         </a></h4>
+//         <div className="tag-container">{tags}</div>
+//         <h6>{`${props.story.creator} | ${date}`}</h6>
+//       </div>
+//     );
+//   }
+// }
+
+class BlurbDesktop extends React.Component{
+  shouldComponentUpdate(nextProps){
+    // performance optimization
+    // update only if isHighlight changes
+    // or if focusCategory changes
+    if (this.props.isHighlight !== nextProps.isHighlight){
+      return true;
+    }
+    if (this.props.focusCategory !== nextProps.focusCategory){
+      return true;
+    }
+    return false;
+  }
+
+  render() {
+    const props = this.props;
+    const className = props.isHighlight ? 'blurb desktop highlight' : 'blurb desktop';
+    const date = props.formatDate(props.story.date);
+
+    const tags = props.story.fullCategories
+      .map(category => {
+        const matchCategory = props.storyCategories.filter(cat => category.key === cat.key)[0];
+        const catLabel = matchCategory ? matchCategory.label : null;
+        const isFocusCat = (props.focusCategory && category.key === props.focusCategory.key);
+        return (<span
+          key={category.key}
+          // style={{color: category.tagColor}}
+          className={isFocusCat ? 'highlight' : null}
+          onClick={()=> props.selectCategoryByKey(category.key)}
+          >
+            {catLabel}
+          </span>
+        );
+      })
+      .reduce((acc, x) => acc === null ? [x] : [acc, ' ', x], null);
+
+    return (
+      <div className={className}
+        style={{'backgroundColor': props.story.color}} >
+        <h5 style={{color: "#eee"}}>
+          {props.story.type}
+        </h5>
+        <h4><a
+          href={props.story.link}
+          target='_blank'
+          // style={{color: '#fff'}}
+          >
+          {props.story.title}
+        </a></h4>
+        <div className="tag-container">{tags}</div>
+        <div className="blurb-details">{`${props.story.creator} | ${date}`}</div>
+      </div>
+    );
+  }
 }
 
 function BlurbContainerMarkerDesktop(props){

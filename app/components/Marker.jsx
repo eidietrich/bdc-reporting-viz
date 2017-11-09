@@ -1,18 +1,18 @@
 import React from 'react';
 
-function Marker(props){
-  // const marker = <circle cx={0} cy={0} r={10} />
-  // TODO: Set this up so it flows from this.markerWidth
-  // OR: Really, it should be a layout-applied property
-  // const markerWidth = 12;
-  // let classNames = 'marker'
-  // classNames += (props.data.type === 'growth-feature') ? ' secondary' : '';
-  // classNames += props.fade ? ' fadeout': '';
-  // classNames += props.highlight ? ' highlight' : '';
-  // classNames += props.prime ? ' prime-highlight': '';
+class Marker extends React.Component {
+  render(){
+    const props = this.props;
+    // const circle = (<circle
+    //   className={props.markerClass}
+    //   cx={-props.data.markerWidth / 2}
+    //   cy={0}
+    //   r={props.data.radius}
+    //   fill={props.data.color}
+    //   stroke={props.data.color}
+    // />);
 
-  // const fill = (props.data.markerWidth > 10) ? 'url(#Lines)' : '#bbb';
-  const rect = (<rect
+    const rect = (<rect
     className={props.markerClass}
     x={-props.data.markerWidth / 2}
     y={0}
@@ -21,22 +21,23 @@ function Marker(props){
     // fill={fill}
     fill={props.data.color}
     stroke={props.data.color}
-  />);
+    />);
 
-  const shadow = props.shadow ? (<rect
-    x={-props.data.markerWidth / 2 + 1}
-    y={0 + 1}
-    width={props.data.markerWidth}
-    height={props.data.radius * 2}
-    className='marker-shadow'
-  />) : null;
+    // const shadow = props.shadow ? (<rect
+    //   x={-props.data.markerWidth / 2 + 2}
+    //   y={0 + 2}
+    //   width={props.data.markerWidth}
+    //   height={props.data.radius * 2}
+    //   className='marker-shadow'
+    // />) : null;
 
-  const marker = (
-    <g>
-      {shadow}{rect}
-    </g>
-  )
-  return marker;
+    const marker = (
+      <g>
+        {rect}
+      </g>
+    )
+    return marker;
+  }
 }
 
 export default Marker;
